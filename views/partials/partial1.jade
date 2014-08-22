@@ -1,3 +1,20 @@
-.row
-	.col-lg-12
-		p This is the partial for view 1.
+.modal-body
+	table.table.table-hover
+		thead
+			tr
+				th #
+				th Project Title
+				th Customer
+				th Start Of Production
+				th Revenue per year
+				th Total Revenue
+				th Win Probability
+		tbody
+			tr(ng-repeat="project in projects")
+				td {{$index + 1}}
+				td {{project.title}}
+				td {{project.customer.name}}
+				td {{project.sopDate | date: 'MM/dd/yyyy'}}
+				td {{project.volume*project.price}}
+				td {{project.volume*project.price*project.life}}
+				td {{project.winprobability}}

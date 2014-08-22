@@ -1,0 +1,11 @@
+.row
+	.col-md-6
+		button.btn.btn-success.btn-lg.btn-block(ng-click="open('?winprobability__gte=60')") Focus Projects 
+	.col-md-6
+		button.btn.btn-danger.btn-lg.btn-block(ng-click="open('')") Slipping Projects
+hr
+.row
+	.col-md-6(ng-init="h1 = 2014")
+		button.btn.btn-warning.btn-lg.btn-block(ng-click="open('?sopDate__gte='+h1+'-01-01')") Horizon 1 Project
+	.col-md-6
+		button.btn.btn-info.btn-lg.btn-block(ng-click="open('?winprobability__lte=10')") No Pull Projects

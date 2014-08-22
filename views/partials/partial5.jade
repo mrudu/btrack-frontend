@@ -1,0 +1,10 @@
+.modal-header
+	h3.modal-title Customer Form
+.modal-body
+	form(role="form", name="customerform", novalidate)
+		.form-group
+			label(for="form1title") Name of Customer
+			input.form-control(type="text", id="form1title", placeholder="Enter name of the Customer", ng-model="customer.name", required)
+.modal-footer
+	button.btn.btn-primary(ng-click="ok()", ng-disabled="customerform.$invalid") OK
+	button.btn.btn-danger(ng-click="cancel()") Cancel

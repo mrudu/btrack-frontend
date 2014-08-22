@@ -1,0 +1,11 @@
+.list-group
+	a.list-group-item(ng-class="{active: !isCollapsed1}", ng-click="isCollapsed1=!isCollapsed1") Create a new Customer
+	div(collapse="isCollapsed1")
+		.well.well-lg
+			p Create a new Customer profile if it doesn't exist yet.
+			button.btn.btn-default(ng-click="openCustomer(5)") Open me!
+	a.modal-project.list-group-item(ng-class="{active: !isCollapsed3}", ng-click="isCollapsed3=!isCollapsed3") Create a new Project
+	div(collapse="isCollapsed3")
+		.well.well-lg.modal-project
+			p Enter data to start a new project based on the existing components..
+			button.btn.btn-default(ng-click="openProject(6)") Open me!

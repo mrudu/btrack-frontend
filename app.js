@@ -44,6 +44,9 @@ app.get('/partial/:name', routes.partial);
 
 // JSON API
 app.get('/api/name', api.name);
+app.get('/api/:djmodel', api.getmodeldata);
+app.post('/api/dashboard', api.dashboard);
+app.post('/api/:djmodel', api.postmodeldata);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);

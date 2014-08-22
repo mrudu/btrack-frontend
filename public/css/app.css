@@ -1,8 +1,60 @@
 /* app css stylesheet */
 
 body {
-  padding-top:70px;
+	overflow-x: hidden;
+	position: relative;
+	left: 0px;
 }
-
-
-  
+.project-modal .modal-dialog{
+	width: 90%;
+}
+body .glypicon-asterisk{
+	color: #F0AD4E;
+}
+.rating-class{
+	margin-top:5px;
+	font-size: 17px;
+}
+.body-push{
+	left: 240px;
+}
+.sidebar, body{
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+.sidebar {
+	width: 240px;
+	background-color: #CCCCCC;
+	position: fixed;
+	height: 100%;
+	top:0;
+	z-index:1000;
+	left:-240px;
+}
+.sidebar.slide-out{
+	left: 0px;
+}
+.home-button{
+	height: 70px;
+	width: 70px;
+	background-color: black;
+	color: #EEEEEE;
+	border: 10px;
+	border-color: #BBBBBB;
+	border-radius: 40px;
+	font-size: 21px;
+}
+.home-button:focus{
+	outline:white
+}
+.home{
+	position: relative;
+	top: 20px;
+	left: 35px;
+}
+.side{
+	position: relative;
+	top: 10px;
+	left: 85px;
+}
