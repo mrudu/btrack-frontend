@@ -43,9 +43,11 @@ app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
 
 // JSON API
+app.get('/api/report/:id', api.report);
 app.get('/api/name', api.name);
 app.get('/api/:djmodel', api.getmodeldata);
-app.post('/api/dashboard', api.dashboard);
+app.post('/api/put/:djmodel/:id', api.putmodeldata);
+app.post('/api/filter/:djmodel', api.dashboard);
 app.post('/api/:djmodel', api.postmodeldata);
 
 // redirect all others to the index (HTML5 history)

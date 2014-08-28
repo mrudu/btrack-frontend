@@ -1,5 +1,10 @@
+// Customer Modal Partial
 .modal-header
-	h3.modal-title Customer Form
+	.row
+		h3.modal-title Customer Form
+	.row
+		.col-md-10.col-md-offset-1
+			alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
 .modal-body
 	form(role="form", name="customerform", novalidate)
 		.form-group

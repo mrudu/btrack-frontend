@@ -1,12 +1,33 @@
 /* app css stylesheet */
 
 body {
-	overflow-x: hidden;
 	position: relative;
 	left: 0px;
 }
-.project-modal .modal-dialog{
-	width: 90%;
+.modalclass .modal-body{
+	overflow-y: auto;
+	height: 435px;
+}
+.modalclass .form-control{
+	padding: 3px;
+}
+.modalclass .modal-footer{
+	padding-top: 10px;
+}
+.modalclass .modal-content{
+	height: 615px;
+}
+.modal-dialog{
+	margin-top:15px;
+}
+.clickable{
+	cursor:pointer;
+}
+.modal{
+	overflow:hidden;
+}
+.modalclass .modal-dialog{
+	width: 80%
 }
 body .glypicon-asterisk{
 	color: #F0AD4E;
@@ -25,7 +46,7 @@ body .glypicon-asterisk{
 }
 .sidebar {
 	width: 240px;
-	background-color: #CCCCCC;
+	background-color: #535050;
 	position: fixed;
 	height: 100%;
 	top:0;
@@ -55,6 +76,27 @@ body .glypicon-asterisk{
 }
 .side{
 	position: relative;
-	top: 10px;
+	top: 20px;
 	left: 85px;
+}
+.home-box{
+	height: 150px;
+	width: 150px;
+}
+.ovh{
+	overflow:hidden;
+}
+.glyphicon-plus{
+	color:green;
+}
+.borderless .btn-default{
+	border-color: white;
+}
+.datepickerstyle{
+	width: 270px;
+	position:absolute;
+	display:block;
+	bottom:50px;
+	padding: 3px;
+	box-shadow:1px 1px 8px 1px rgba(80,80,218,0.77)
 }

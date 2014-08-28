@@ -10,6 +10,22 @@ exports.name = function (req, res) {
   });
 };
 
+exports.report = function(req,res){
+	client.get('report/'+req.params.id+'/',function(err,resp,body){
+		try{
+			console.log(JSON.stringify(resp.statusCode));
+			res.json({
+				body: body
+			});
+		} catch(e){
+			console.log('404 Error. Server not found');
+			res.json({
+				body: '404'
+			});
+		}
+	});
+}
+
 exports.getmodeldata = function(req, res){
 	client.get(req.params.djmodel+'/', function(err, resp, body){
 		try{
@@ -42,11 +58,26 @@ exports.postmodeldata = function(req,res){
 	});
 }
 exports.dashboard = function(req, res){
-	client.get('project/'+req.body.btn, function(err, resp, body){
+	client.get(req.params.djmodel+'/'+req.body.btn, function(err, resp, body){
 		try{
 			console.log(JSON.stringify(resp.statusCode));
 			res.json({
 				body: body
+			});
+		} catch(e){
+			res.json({
+				body: '404'
+			});
+		}
+	});
+}
+exports.putmodeldata = function(req, res){
+	var postData =req.body;
+	client.put(req.params.djmodel+'/'+req.params.id+'/', postData, function(err, resp, body){
+		try{
+			console.log(JSON.stringify(resp.statusCode));
+			res.json({
+				body: resp.statusCode
 			});
 		} catch(e){
 			res.json({

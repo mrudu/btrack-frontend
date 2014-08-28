@@ -1,11 +1,47 @@
-.list-group
-	a.list-group-item(ng-class="{active: !isCollapsed1}", ng-click="isCollapsed1=!isCollapsed1") Create a new Customer
-	div(collapse="isCollapsed1")
-		.well.well-lg
-			p Create a new Customer profile if it doesn't exist yet.
-			button.btn.btn-default(ng-click="openCustomer(5)") Open me!
-	a.modal-project.list-group-item(ng-class="{active: !isCollapsed3}", ng-click="isCollapsed3=!isCollapsed3") Create a new Project
-	div(collapse="isCollapsed3")
-		.well.well-lg.modal-project
-			p Enter data to start a new project based on the existing components..
-			button.btn.btn-default(ng-click="openProject(6)") Open me!
+// Tasks Modal Partial
+.modal-header
+	.modal-title
+		h3 Tasks
+.modal-body
+	table.table.table-hover
+		thead
+			tr
+				th #
+				th Name
+				th Start Date
+				th Due Date
+				th End Date
+				th Stage
+		tbody
+			tr(ng-repeat = "task in tasks")
+				td {{$index+1}}
+				td {{task.name}}
+				td {{task.start_date| date}}
+				td {{task.due_date| date}}
+				td {{task.end_date| date}}
+				td {{task.workflow.name}}
+.modal-footer.row
+	form(role="form",name="taskform",novalidate)
+		.col-md-3
+			input.form-control(ng-model="postTask.name",placeholder="Enter task name", required)
+		.col-md-2
+			p.input-group(ng-init="opened=false;")
+				input.form-control(ng-model="postTask.due_date",type="text",placeholder="Due Date", required)
+				span.input-group-btn
+					button.btn.btn-default(ng-click="opened=!opened")
+						span.glyphicon.glyphicon-calendar
+				.datepickerstyle(ng-show="opened")
+					datepicker(ng-model="postTask.due_date",show-weeks="true")
+		.col-md-4
+			input.form-control(ng-model="postTask.description",placeholder="Enter description", required)
+		.col-md-2
+			select.form-control(ng-model="postTask.workflow",required)
+				option(value="") --Choose Stage--
+				option(value="1") RFQ/ENQ
+				option(value="2") NBO
+				option(value="3") Quote
+				option(value="4") PPAP
+				option(value="5") FRS
+		.col-md-1
+			button.btn.btn-success(ng-click="add()",ng-disabled="taskform.$invalid")
+				span.glyphicon.glyphicon-upload

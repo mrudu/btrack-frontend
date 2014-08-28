@@ -1,53 +1,57 @@
 extends layout
 block body
-  //.navbar.navbar-default.navbar-fixed-top(role="navigation")
-    .navbar-header
-      button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-ex1-collapse")
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(ng-click="click()") Home
-    .collapse.navbar-collapse.navbar-ex1-collapse
-      ul.nav.navbar-nav
-        li
-          a(href="view1") Profile
-        li
-          a(href="view3") Projects
-        li
-          a(href="view4") Create
-  button.home-button.home(ng-click="click()")
-    span.glyphicon.glyphicon-home
-  .sidebar.bg-primary(ng-class="{'slide-out':boolChangeClass}")
-    .row
-      button.home-button.side(ng-click="click()")
-        span.glyphicon.glyphicon-home
-    .row(style="margin-top:30px;")
-      .col-md-12
-        ul.list-group
-          li.list-group-item
-            a.btn.btn-block.btn-large(href="view1") Dashboard
-          li.list-group-item
-            a.btn.btn-large.btn-block(href="view3") Create
-          li.list-group-item
-            a.btn.btn-large.btn-block(href="view4") Profile
-  .container-fluid
-    .row
-      div.col-md-10.col-md-offset-1
-        div(ng-view)
-        hr
-        button(snap-toggle="left")  Hello
-    .row
-      div.col-md-offset-1.col-md-10
-        | Divgi Warner Pvt Ltd
-
-  script(src='js/lib/angular/angular.js')
-  script(src='js/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
-  script(src='js/lib/angular/angular-route.js')
-  script(src='js/app.js')
-  script(src='js/services.js')
-  script(src='js/controllers.js')
-  script(src='js/filters.js')
-  script(src='js/directives.js')
-  script(src='js/lib/jquery/jquery-2.0.3.min.js')
-  script(src='bootstrap/js/bootstrap.min.js')
+	.sidebar.bg-primary(ng-class="{'slide-out':boolChangeClass}", ng-mouseleave = "boolChangeClass = false;")
+		.row
+			button.home-button.side(ng-click="click()")
+				span.glyphicon.glyphicon-home
+		.row(style="margin-top:40px;")
+			.col-md-12
+				ul.list-group
+					li.list-group-item.list-group-item-info(ng-init="isCollapsed = true;isCollapsed2=true;isCollapsed3 = true;isCollapsed4 = true")
+						a.btn.btn-block.btn-large(ng-click="isCollapsed=!isCollapsed") Dashboard
+						.list-group(collapse="isCollapsed")
+							a.list-group-item.list-group-item-success(href="dashboard/fp") Focus Projects
+							a.list-group-item.list-group-item-success(href="dashboard/h1p") Horizon 1 Projects
+							a.list-group-item.list-group-item-success(href="dashboard/h2p") Horizon 2 Projects
+							a.list-group-item.list-group-item-success(href="dashboard/h3p") Horizon 3 Projects
+							a.list-group-item.list-group-item-success(href="dashboard/npp") No Pull Projects
+							a.list-group-item.list-group-item-success(href="dashboard/sp") Suspended Projects
+					li.list-group-item.list-group-item-info(ng-mouseover="isCollapsed3=false", ng-mouseleave="isCollapsed3=true").text-center
+						a.btn.btn-large.btn-block(ng-click="isCollapsed3=true") Reports
+						.list-group(collapse="isCollapsed3")
+							a.list-group-item.list-group-item-warning(href="report/all") All Projects
+							a.list-group-item.list-group-item-warning(href="report/top10") Top 10
+							.list-group-item.list-group-item-warning
+								a.list-group-item.list-group-item-warning(ng-click="isCollapsed4=!isCollapsed4") Category
+								.list-group(collapse="isCollapsed4")
+									a.list-group-item.list-group-item-danger(href="report/tc") Next Generation Transfer Cases
+									a.list-group-item.list-group-item-danger(href="report/synchro") Synchronizers
+									a.list-group-item.list-group-item-danger(href="report/ptu") Next Trac Power Transfer Units
+									a.list-group-item.list-group-item-danger(href="report/comp") Components
+									a.list-group-item.list-group-item-danger(href="report/oth") Others
+							a.list-group-item.list-group-item-warning(href="report/top10") Top 10
+					li.list-group-item.list-group-item-info(ng-mouseover="isCollapsed2=false", ng-mouseleave="isCollapsed2=true").text-center
+						a.btn.btn-large.btn-block(ng-click="isCollapsed2=true") Create
+						.list-group(collapse="isCollapsed2")
+							a.list-group-item(href="create/project") Project
+	.row
+		.col-md-3
+			button.home-button.home(ng-click="click()")
+				span.glyphicon.glyphicon-th
+	.row(style="margin-top:20px;")
+		.container-fluid
+			.row
+				div.col-md-10.col-md-offset-1
+					div(ng-view)
+					hr
+			.row
+				div.col-md-offset-1.col-md-10
+					| Divgi-Warner Pvt Ltd
+	script(src='js/lib/angular/angular.js')
+	script(src='js/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
+	script(src='js/lib/angular/angular-route.js')
+	script(src='js/app.js')
+	script(src='js/services.js')
+	script(src='js/controllers.js')
+	script(src='js/filters.js')
+	script(src='js/directives.js')

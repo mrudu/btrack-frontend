@@ -1,75 +1,85 @@
-.modal-header(ng-init="project.price=0;project.volume=0")
-	.row
-		.col-md-2
-			h3.modal-title Project Form
-		.col-md-4
-			h4.text-right
-				strong Total Project Revenue &nbsp;&nbsp;
-				{{(project.life+2) * project.price * project.volume}}
-		.col-md-4
-			h4.text-right
-				strong Revenue per year &nbsp;&nbsp;
-				{{project.price * project.volume}}
+// Project Modal Partial
+form(role="form", name="projectform", novalidate)
+	.panel.panel-default(ng-init="project.price=0;project.volume=0")
+		.panel-heading
+			.row
+				.col-md-4
+					h3.text-center
+						strong PROJECT FORM
+				.col-md-4.center-block
+					h4.text-center
+						strong Total Project Revenue &nbsp;&nbsp;
+						{{(project.life+2) * project.price * project.volume}}
+				.col-md-4.center-block
+					h4.text-center
+						strong Revenue per year &nbsp;&nbsp;
+						{{project.price * project.volume}}
 
-.modal-body
-	form(role="form", name="projectform", novalidate)
-		.row
-			.col-md-4
-				.form-group
-					label.control-label(for="projecttitle") Title
-					input.form-control(required, type="text", id="projecttitle", placeholder="Enter title of the project", ng-model="project.title")
-				.form-group
-					label(for="projectcustomer") Customer
-					select.form-control(required, id="projectcustomer", ng-change="customerchange()", ng-model="project.customer")
-						option(ng-repeat = "customer in customers", value="{{customer.id}}") {{customer.name}}
-				.form-group
-					label(for="projectproduct") Category of Products
-					select.form-control(id='projectproduct', ng-model="project.product", required)
-						option(value="Comp") Components
-						option(value="Synchro") Synchronizers
-						option(value="T/c") Next Gen Transfer Cases
-						option(value="PTU") Next Trac Power Transfer Units
-						option(value="Oth") Others
-					
-				.form-group
-					label(for="projectpriority") Priority
-					select.form-control(id="projectpriority", ng-model="project.priority", placeholder = "Enter the priority of the project", required)
-						option(value="3") High
-						option(value="2") Medium
-						option(value="1") Low
-				.form-group
-					label(for = "projectwinprobability") Win Probability
-					input.form-control(type = "text", ng-model = "project.winprobability", id = "projectwinprobability", placeholder = "Enter the project's win probability", required)
-				.form-group
-					label(for = "projectpop") Placeof Production
-					select.form-control(id="projectpop", ng-model="project.pop", required)
-						option(value="Bho") Bhosari
-						option(value="Sir") Sirsi
-			.col-md-4
-				.form-group
-					label(for="projectprice") Price in (Rs.)
-					input.form-control(only-num, type="number", ng-model="project.price", id="projectprice", placeholder="Enter the tentative price of the product/component", required)
-				.form-group
-					label(for="projectvolume") Yearly Volume
-					input.form-control(type="number", ng-model="project.volume", id="projectvolume", placeholder="Enter volume to be shipped in a year", only-num, required)
-				.form-group
-					label(for="projectlife") Project Life (in Years)
-					.row
-						.col-md-3
-							input.form-control.text-center(type="text", readonly, value="{{project.life+2}}")
-						.col-md-9.rating-class
-							rating(id="projectlife", ng-model="project.life", ng-init="project.life=3", state-on="'glyphicon-remove'", state-off="'glyphicon-minus'", max="13")
-				.form-group
-					label(for="projectdescription") Project Scope
-					textarea.form-control(id="projectdescription", ng-model="project.description", placeholder = "Give a brief description about this project.", rows=4, required)
-				.form-group
-					label(for="projectpartno") Part Number
-					input.form-control(type="text", id="projectpartno", ng-model="project.part_no", placeholder = "Enter the part number of the product manufactured", required)
-			.col-md-4
-				label Tentative Start-Of-Projection Date
-				hr
-				.datepicker(style="display:inline-block; min-height:180px")
-					datepicker.well.well-sm(ng-model="project.sopDate", show-weeks="true", required)
-.modal-footer
-	button.btn.btn-primary(ng-click="ok()", ng-disabled="projectform.$invalid") OK
-	button.btn.btn-danger(ng-click="cancel()") Cancel
+			.row
+				.col-md-8.col-md-offset-2
+					alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
+		.panel-body
+				.row
+					.col-md-4
+						.form-group
+							label.control-label(for="projecttitle") Title
+							input.form-control(required, type="text", id="projecttitle", placeholder="Enter title of the project", ng-model="project.title")
+						.form-group
+							.row
+								.col-md-5
+									label(for="projectcustomer") Customer&nbsp;&nbsp;
+								.col-md-2.col-md-offset-5.borderless
+									button.btn.btn-default(ng-click="open()")
+										span.glyphicon.glyphicon-plus
+							select.form-control(required, id="projectcustomer", ng-options = "customer.name for customer in customers track by customer.id", ng-model="custom")
+						.form-group
+							label(for="projectproduct") Category of Products
+							select.form-control(id='projectproduct', ng-model="project.product", required)
+								option(value="Comp") Components
+								option(value="Synchro") Synchronizers
+								option(value="T/c") Next Gen Transfer Cases
+								option(value="PTU") Next Trac Power Transfer Units
+								option(value="Oth") Others
+						
+						.form-group
+							label(for="projectpriority") Priority
+							select.form-control(id="projectpriority", ng-model="project.priority", placeholder = "Enter the priority of the project", required)
+								option(value="3") High
+								option(value="2") Medium
+								option(value="1") Low
+						.form-group
+							label(for = "projectwinprobability") Win Probability
+							input.form-control(type = "number", ng-model = "project.winprobability", id = "projectwinprobability", placeholder = "Enter the project's win probability", only-num, required)
+						.form-group
+							label(for = "projectpop") Placeof Production
+							select.form-control(id="projectpop", ng-model="project.pop", required)
+								option(value="Bho") Bhosari
+								option(value="Sir") Sirsi
+					.col-md-4
+						.form-group
+							label(for="projectprice") Price in (Rs.)
+							input.form-control(only-num, type="number", ng-model="project.price", id="projectprice", placeholder="Enter the tentative price of the product/component", required)
+						.form-group
+							label(for="projectvolume") Yearly Volume
+							input.form-control(type="number", ng-model="project.volume", id="projectvolume", placeholder="Enter volume to be shipped in a year", only-num, required)
+						.form-group
+							label(for="projectlife") Project Life (in Years)
+							.row
+								.col-md-3
+									input.form-control.text-center(type="text", readonly, value="{{project.life+2}}")
+								.col-md-9.rating-class
+									rating(id="projectlife", ng-model="project.life", ng-init="project.life=3", state-on="'glyphicon-remove'", state-off="'glyphicon-minus'", max="13")
+						.form-group
+							label(for="projectdescription") Project Scope
+							textarea.form-control(id="projectdescription", ng-model="project.description", placeholder = "Give a brief description about this project.", rows=4, required)
+						.form-group
+							label(for="projectpartno") Part Number
+							input.form-control(type="text", id="projectpartno", ng-model="project.part_no", placeholder = "Enter the part number of the product manufactured", required)
+					.col-md-4
+						label Tentative Start-Of-Projection Date
+						hr
+						.datepicker(style="display:inline-block; min-height:180px")
+							datepicker.well.well-sm(ng-model="project.sopDate", show-weeks="true", required)
+		.panel-footer
+			button.btn.btn-primary(type="submit", ng-click="ok()", ng-disabled="projectform.$invalid") OK
+			button.btn.btn-danger(ng-click="cancel()") Cancel

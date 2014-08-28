@@ -1,20 +1,43 @@
-.modal-body
+// Dashboard Partial
+.panel.panel-success
+	.panel-heading.text-center
+		h4 
+			strong {{type}} PROJECTS
 	table.table.table-hover
 		thead
-			tr
+			tr(ng-init="reverse=true")
 				th #
-				th Project Title
-				th Customer
-				th Start Of Production
-				th Revenue per year
-				th Total Revenue
-				th Win Probability
+				th.clickable(ng-click="predicate='title';reverse=!reverse") Project Title
+				th.clickable(ng-click="predicate='customer.name';reverse=!reverse") Customer
+				th.clickable(ng-click="predicate='volume*price';reverse=!reverse") Revenue per year
+				th.clickable(ng-click="predicate='volume*price*life';reverse=!reverse") Total Revenue
+				th.clickable(ng-click="predicate='title';reverse=!reverse") Start Of Production
+				th.clickable(ng-click="predicate='winprobability';reverse=!reverse") Win Probability
+				th Remarks
+				th Edit
+				th(ng-show="hide") Activate
+				th(ng-hide="hide") Suspend
+				th Tasks
 		tbody
-			tr(ng-repeat="project in projects")
+			tr(ng-repeat="project in projects| orderBy: predicate: reverse")
 				td {{$index + 1}}
 				td {{project.title}}
 				td {{project.customer.name}}
-				td {{project.sopDate | date: 'MM/dd/yyyy'}}
-				td {{project.volume*project.price}}
+				td {{project.volume*project.price| currency: ' '}}
 				td {{project.volume*project.price*project.life}}
+				td {{project.sopDate | date: 'dd MMM,yyyy'}}
 				td {{project.winprobability}}
+				td
+					button.btn.btn-default(ng-click="open(''+project.id+'')")
+						span.glyphicon.glyphicon-comment
+				td
+					button.btn.btn-default(ng-click="edit(''+project.id+'')")
+						span.glyphicon.glyphicon-edit
+				td
+					button.btn.btn-default(ng-click="suspend(''+project.id,1,$index+'')", ng-hide = "hide")
+						span.glyphicon.glyphicon-trash
+					button.btn.btn-default(ng-click="suspend(''+project.id,0,$index+'')", ng-show = "hide")
+						span.glyphicon.glyphicon-share-alt
+				td
+					button.btn.btn-default(ng-click="task(''+project.id)",ng-hide="hide")
+						span.glyphicon.glyphicon-dashboard
