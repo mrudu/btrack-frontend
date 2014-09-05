@@ -7,41 +7,50 @@
 		thead
 			tr
 				th #
-				th Name
+				th Stage
 				th Start Date
 				th Due Date
 				th End Date
-				th Stage
+				th Description
+				th Remarks
 		tbody
 			tr(ng-repeat = "task in tasks")
 				td {{$index+1}}
-				td {{task.name}}
+				td {{task.workflow.name}}
 				td {{task.start_date| date}}
 				td {{task.due_date| date}}
-				td {{task.end_date| date}}
-				td {{task.workflow.name}}
+				td
+					div(ng-hide="!task.end_date")
+						{{task.end_date| date}}
+					.center-block(ng-show="!task.end_date")
+						button.btn.btn-info.btn-sm(ng-click="complete(task.id+'',$index+'')")
+							span.glyphicon.glyphicon-ok
+				td {{task.description}}
+				td {{task.remarks}}
 .modal-footer.row
 	form(role="form",name="taskform",novalidate)
-		.col-md-3
-			input.form-control(ng-model="postTask.name",placeholder="Enter task name", required)
-		.col-md-2
-			p.input-group(ng-init="opened=false;")
-				input.form-control(ng-model="postTask.due_date",type="text",placeholder="Due Date", required)
-				span.input-group-btn
-					button.btn.btn-default(ng-click="opened=!opened")
-						span.glyphicon.glyphicon-calendar
-				.datepickerstyle(ng-show="opened")
-					datepicker(ng-model="postTask.due_date",show-weeks="true")
-		.col-md-4
-			input.form-control(ng-model="postTask.description",placeholder="Enter description", required)
 		.col-md-2
 			select.form-control(ng-model="postTask.workflow",required)
 				option(value="") --Choose Stage--
-				option(value="1") RFQ/ENQ
-				option(value="2") NBO
-				option(value="3") Quote
-				option(value="4") PPAP
-				option(value="5") FRS
+				option(value="11") RFQ/ENQ
+				option(value="12") NBO
+				option(value="13") Quote
+				option(value="14") PO
+				option(value="15") PPAP
+				option(value="16") Final PO
+				option(value="17") First Revenue Shipment
+		.col-md-2(ng-init="dateshow=false;")
+			p.input-group
+				input.form-control(type="date", ng-model="postTask.due_date",required,placeholder="Due Date")
+				span.input-group-btn
+					button.btn.btn-default(ng-click="dateshow=!dateshow;")
+						span.glyphicon.glyphicon-calendar
+			.datepickerstyle(ng-show="dateshow")
+				datepicker(ng-model="postTask.due_date", show-weeks="false")
+		.col-md-3
+			input.form-control(ng-model="postTask.remarks",placeholder="Enter Remarks", required)
+		.col-md-4
+			input.form-control(ng-model="postTask.description",placeholder="Enter Description", required)
 		.col-md-1
 			button.btn.btn-success(ng-click="add()",ng-disabled="taskform.$invalid")
 				span.glyphicon.glyphicon-upload

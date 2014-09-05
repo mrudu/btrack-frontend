@@ -47,6 +47,7 @@ app.get('/api/report/:id', api.report);
 app.get('/api/name', api.name);
 app.get('/api/:djmodel', api.getmodeldata);
 app.post('/api/put/:djmodel/:id', api.putmodeldata);
+app.post('/api/patch/:djmodel/:id', api.patchmodeldata);
 app.post('/api/filter/:djmodel', api.dashboard);
 app.post('/api/:djmodel', api.postmodeldata);
 

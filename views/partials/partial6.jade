@@ -10,11 +10,15 @@ form(role="form", name="projectform", novalidate)
 					h4.text-center
 						strong Total Project Revenue &nbsp;&nbsp;
 						{{(project.life+2) * project.price * project.volume}}
-				.col-md-4.center-block
+				.col-md-3.center-block
 					h4.text-center
 						strong Revenue per year &nbsp;&nbsp;
 						{{project.price * project.volume}}
-
+				.col-md-1
+					button.btn.btn-default(ng-click="suspend(''+project.id,1,$index+'')", ng-hide = "project.status==1;")
+						span.glyphicon.glyphicon-trash
+					button.btn.btn-default(ng-click="suspend(''+project.id,0,$index+'')", ng-show = "project.status==1;")
+						span.glyphicon.glyphicon-share-alt
 			.row
 				.col-md-8.col-md-offset-2
 					alert(ng-repeat="alert in alerts", type="{{alert.type}}", close="closeAlert($index)") {{alert.msg}}
@@ -35,10 +39,12 @@ form(role="form", name="projectform", novalidate)
 						.form-group
 							label(for="projectproduct") Category of Products
 							select.form-control(id='projectproduct', ng-model="project.product", required)
-								option(value="Comp") Components
+								option(value="Comp") Components (Exports/Domestic)
 								option(value="Synchro") Synchronizers
-								option(value="T/c") Next Gen Transfer Cases
-								option(value="PTU") Next Trac Power Transfer Units
+								option(value="ACE") ACE
+								option(value="WTC") World Transfer Cases
+								option(value="TC") Next Generation/Transfer Cases
+								option(value="PTU") NexTrac/Power Transfer Units
 								option(value="Oth") Others
 						
 						.form-group

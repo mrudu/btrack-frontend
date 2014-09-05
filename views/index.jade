@@ -7,30 +7,32 @@ block body
 		.row(style="margin-top:40px;")
 			.col-md-12
 				ul.list-group
-					li.list-group-item.list-group-item-info(ng-init="isCollapsed = true;isCollapsed2=true;isCollapsed3 = true;isCollapsed4 = true")
+					li.list-group-item
+						a.btn.btn-large.btn-block(href="summary") Summary
+					li.list-group-item(ng-init="isCollapsed = true;isCollapsed2=true;isCollapsed3 = true;isCollapsed4 = true")
 						a.btn.btn-block.btn-large(ng-click="isCollapsed=!isCollapsed") Dashboard
 						.list-group(collapse="isCollapsed")
+							a.list-group-item.list-group-item-success(href="dashboard/all") All Projects
 							a.list-group-item.list-group-item-success(href="dashboard/fp") Focus Projects
 							a.list-group-item.list-group-item-success(href="dashboard/h1p") Horizon 1 Projects
 							a.list-group-item.list-group-item-success(href="dashboard/h2p") Horizon 2 Projects
 							a.list-group-item.list-group-item-success(href="dashboard/h3p") Horizon 3 Projects
 							a.list-group-item.list-group-item-success(href="dashboard/npp") No Pull Projects
 							a.list-group-item.list-group-item-success(href="dashboard/sp") Suspended Projects
-					li.list-group-item.list-group-item-info(ng-mouseover="isCollapsed3=false", ng-mouseleave="isCollapsed3=true").text-center
+					li.list-group-item(ng-mouseover="isCollapsed3=false", ng-mouseleave="isCollapsed3=true")
 						a.btn.btn-large.btn-block(ng-click="isCollapsed3=true") Reports
 						.list-group(collapse="isCollapsed3")
-							a.list-group-item.list-group-item-warning(href="report/all") All Projects
-							a.list-group-item.list-group-item-warning(href="report/top10") Top 10
+							a.list-group-item.list-group-item-warning(href="report/top10") TOP 10
 							.list-group-item.list-group-item-warning
-								a.list-group-item.list-group-item-warning(ng-click="isCollapsed4=!isCollapsed4") Category
+								a.clickable.list-group-item.list-group-item-warning(ng-click="isCollapsed4=!isCollapsed4") CATEGORY
 								.list-group(collapse="isCollapsed4")
 									a.list-group-item.list-group-item-danger(href="report/tc") Next Generation Transfer Cases
 									a.list-group-item.list-group-item-danger(href="report/synchro") Synchronizers
 									a.list-group-item.list-group-item-danger(href="report/ptu") Next Trac Power Transfer Units
 									a.list-group-item.list-group-item-danger(href="report/comp") Components
 									a.list-group-item.list-group-item-danger(href="report/oth") Others
-							a.list-group-item.list-group-item-warning(href="report/top10") Top 10
-					li.list-group-item.list-group-item-info(ng-mouseover="isCollapsed2=false", ng-mouseleave="isCollapsed2=true").text-center
+							a.list-group-item.list-group-item-warning(href="report/lagging") LAGGING
+					li.list-group-item(ng-mouseover="isCollapsed2=false", ng-mouseleave="isCollapsed2=true").text-center
 						a.btn.btn-large.btn-block(ng-click="isCollapsed2=true") Create
 						.list-group(collapse="isCollapsed2")
 							a.list-group-item(href="create/project") Project
@@ -46,7 +48,7 @@ block body
 					hr
 			.row
 				div.col-md-offset-1.col-md-10
-					| Divgi-Warner Pvt Ltd
+					| Divgiwarner Pvt Ltd
 	script(src='js/lib/angular/angular.js')
 	script(src='js/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
 	script(src='js/lib/angular/angular-route.js')

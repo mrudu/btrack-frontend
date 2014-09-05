@@ -1,27 +1,12 @@
-// Reports Partial
-.panel.panel-default
-	.panel-heading On-Going Projects
-	.panel-body(ng-init="reverse = False")
-		div(ng-include="/partial/1")
-		table.table.table-hover
-			thead
-				tr
-					th #
-					th.click
-						a.clickable(ng-click="predicate='title';reverse=!reverse") Title
-					th
-						button.btn.btn-link(ng-click="predicate='createdBy';reverse=!reverse") Created by
-					th
-						a(ng-click="predicate='created_on';reverse=!reverse") Start Date
-					th
-						a(ng-click="predicate='sopDate';reverse=!reverse") End Date
-					th
-						a(ng-click="predicate='reference';reverse=!reverse") Reference Number
-			tbody
-				tr(ng-Repeat = "project in projects| orderBy:predicate:reverse")
-					td {{$index}}
-					td {{project.title}}
-					td {{project.createdBy.username}}
-					td {{project.created_on| date}}
-					td {{project.sopDate| date}}
-					td {{project.reference}}
+// Timeline Ctrl
+.page-header.text-center
+	h3 TIMELINE
+.timeline(ng-repeat = "time in timeline")
+	.row
+		.col-md-2
+			{{time.title}}
+		.col-md-10
+			progress(max="max_max")
+				bar(ng-repeat="x in time.values",value="x.value",type="{{x.type}}") 
+					strong {{x.value-2}}
+

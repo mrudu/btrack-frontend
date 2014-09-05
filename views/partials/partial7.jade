@@ -1,12 +1,84 @@
-// Unused
+// BDR Summary
+.page-header
+	.row
+		.col-md-6 
+			h1(style="font-variant:small-caps;") 
+				small Active Projects&nbsp;&nbsp;
+				| {{dash.active}}
+		.col-md-6 
+			h1(style="font-variant:small-caps;")
+				small Suspended Projects&nbsp;&nbsp;
+				| {{dash.suspended}}
 .row
 	.col-md-6
-		button.btn.btn-success.btn-lg.btn-block(ng-click="open('?winprobability__gte=60')") Focus Projects 
+		.panel.panel-default
+			.panel-heading
+				| BDR Summary
+			table.table.table-hover
+				thead
+					tr
+						th Category of Tasks
+						th No of Projects
+				tbody
+					tr
+						td Total No of Projects
+						td {{dash.active+dash.suspended}}
+					tr
+						td Enquiries
+						td {{dash.enq}}
+					tr
+						td NBOs Submitted
+						td {{dash.nbo}}
+					tr
+						td Quotations Submitted
+						td {{dash.quo}}
+					tr
+						td Initial POs Received
+						td {{dash.ipo}}
+					tr
+						td PPAP submitted
+						td {{dash.ppap}}
+					tr
+						td Final POs Received
+						td {{dash.fpo}}
+					tr
+						td First Revenue Shipments
+						td {{dash.frs}}
 	.col-md-6
-		button.btn.btn-danger.btn-lg.btn-block(ng-click="open('')") Slipping Projects
-hr
-.row
-	.col-md-6(ng-init="h1 = 2014")
-		button.btn.btn-warning.btn-lg.btn-block(ng-click="open('?sopDate__gte='+h1+'-01-01')") Horizon 1 Project
-	.col-md-6
-		button.btn.btn-info.btn-lg.btn-block(ng-click="open('?winprobability__lte=10')") No Pull Projects
+		.panel.panel-default
+			.panel-heading
+				| Strategic Growth Opportunity
+			table.table.table-hover
+				thead
+					tr
+						th Category of Products
+						th No of Projects
+				tbody
+					tr
+						td
+							a(href="report/ptu") Power Transfer Units
+						td {{dash.ptu}}
+					tr
+						td
+							a(href="report/synchro")  Synchronizers
+						td {{dash.syn}}
+					tr
+						td 
+							a(href="report/comp") Components
+						td {{dash.comp}}
+					tr
+						td 
+							a(href="report/tc") Transfer Cases
+						td {{dash.tc}}
+					tr
+						td 
+							a(href="report/wtc") World Transfer Cases
+						td {{dash.wtc}}
+					tr
+						td 
+							a(href="report/ace") ACE
+						td {{dash.ace}}
+					tr
+						td 
+							a(href="report/oth") Others
+							td {{dash.oth}}

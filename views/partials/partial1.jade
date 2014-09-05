@@ -1,8 +1,13 @@
 // Dashboard Partial
 .panel.panel-success
-	.panel-heading.text-center
-		h4 
-			strong {{type}} PROJECTS
+	.panel-heading(ng-init="tota1=0;tota2=0")
+		.row
+			.col-md-11.text-center
+				h4
+					strong {{type}} PROJECTS
+			.col-md-1
+				button.btn.btn-success.btn-default(ng-click="timeline()")
+					span.glyphicon.glyphicon-time
 	table.table.table-hover
 		thead
 			tr(ng-init="reverse=true")
@@ -13,31 +18,45 @@
 				th.clickable(ng-click="predicate='volume*price*life';reverse=!reverse") Total Revenue
 				th.clickable(ng-click="predicate='title';reverse=!reverse") Start Of Production
 				th.clickable(ng-click="predicate='winprobability';reverse=!reverse") Win Probability
-				th Remarks
-				th Edit
-				th(ng-show="hide") Activate
-				th(ng-hide="hide") Suspend
-				th Tasks
+				th.text-center Details
 		tbody
 			tr(ng-repeat="project in projects| orderBy: predicate: reverse")
 				td {{$index + 1}}
 				td {{project.title}}
 				td {{project.customer.name}}
-				td {{project.volume*project.price| currency: ' '}}
-				td {{project.volume*project.price*project.life}}
-				td {{project.sopDate | date: 'dd MMM,yyyy'}}
+				td.text-right {{project.volume*project.price| indno}}
+				td.text-right {{project.volume*project.price*project.life| indno}}
+				td(ng-init="sum(''+project.life,''+project.volume,''+project.price)") {{project.sopDate | date: 'dd MMM,yyyy'}}
 				td {{project.winprobability}}
 				td
-					button.btn.btn-default(ng-click="open(''+project.id+'')")
-						span.glyphicon.glyphicon-comment
+					.samp
+						button.btn.btn-default(ng-click="open(''+project.id+'')")
+							span.glyphicon.glyphicon-comment
+						button.btn.btn-default(ng-click="edit(project)")
+							span.glyphicon.glyphicon-edit
+						button.btn.btn-default(ng-click="task(''+project.id)",ng-hide="hide")
+							span.glyphicon.glyphicon-dashboard
+						button.btn.btn-default(ng-click="opc(''+project.id)")
+							span.glyphicon.glyphicon-check
+		tfoot
+			tr.info
 				td
-					button.btn.btn-default(ng-click="edit(''+project.id+'')")
-						span.glyphicon.glyphicon-edit
 				td
-					button.btn.btn-default(ng-click="suspend(''+project.id,1,$index+'')", ng-hide = "hide")
-						span.glyphicon.glyphicon-trash
-					button.btn.btn-default(ng-click="suspend(''+project.id,0,$index+'')", ng-show = "hide")
-						span.glyphicon.glyphicon-share-alt
 				td
-					button.btn.btn-default(ng-click="task(''+project.id)",ng-hide="hide")
-						span.glyphicon.glyphicon-dashboard
+				td.text-right
+					strong {{total2| indno}}
+				td.text-right
+					strong {{total1| indno}}
+				td
+				td
+				td
+				td
+				td
+				td
+				td
+.row
+	.col-md-6.col-md-offset-6
+		alert.text-center(type="warning",ng-hide="alert",close="alert=true;",style="font-size:14px;font-weight:800;font-family:'Courier New',Helvetica,Arial,sans-serif;") {{message}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			span.glyphicon.glyphicon-question-sign(style="font-size:25px;top:6px;")
+
+

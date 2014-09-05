@@ -86,3 +86,18 @@ exports.putmodeldata = function(req, res){
 		}
 	});
 }
+exports.patchmodeldata = function(req, res){
+	var postData =req.body;
+	client.patch(req.params.djmodel+'/'+req.params.id+'/', postData, function(err, resp, body){
+		try{
+			console.log(JSON.stringify(resp.statusCode));
+			res.json({
+				body: resp.statusCode
+			});
+		} catch(e){
+			res.json({
+				body: '404'
+			});
+		}
+	});
+}

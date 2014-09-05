@@ -1,0 +1,84 @@
+// Opportunity Progress Checklist
+.modal-body
+	.contaner
+		.well.well-lg
+			.row
+				.col-md-11
+					p Has the Customer NDA been signed?
+				.col-md-1
+					{{project.NDA}}
+			.row
+				.col-md-11
+					p Has the PDS/Drawings been recieved?
+				.col-md-1
+					{{project.PDS}}
+			.row
+				.col-md-11
+					p Has the Prelimnary Feasibility report been signed?
+				.col-md-1
+					{{project.PFR}}
+			.row
+				.col-md-11
+					p Has the NBO been signed?
+				.col-md-1
+					{{project.NBO}}
+			.row
+				.col-md-11
+					p Has the Team Feasibility Commitment Report been signed?
+				.col-md-1
+					{{project.TFC}}
+			.row
+				.col-md-11
+					p Has the RS Summary Sheet been signed?
+				.col-md-1
+					{{project.IRS}}
+			.row
+				.col-md-11
+					p Has the Final RS Sheet been signed?
+				.col-md-1
+					{{project.FRS}}
+			.row
+				.col-md-11
+					p Has the Project been approved?
+				.col-md-1
+					{{project.ProjectApproved}}
+			.row
+				.col-md-11
+					p Has the Quotation been submitted?
+				.col-md-1
+					{{project.QUO}}
+			.row
+				.col-md-11
+					p Has the Letter Of Intent been recieved from the Customer?
+				.col-md-1
+					{{project.LOI}}
+			.row
+				.col-md-11
+					p Has the Customer Contract been recieved?
+				.col-md-1
+					{{project.CCRecieve}}
+			.row
+				.col-md-11
+					p Has the Contract been sent to the Customer after review?
+				.col-md-1
+					{{project.CCReview}}
+			.row
+				.col-md-11
+					p Has the Contract been frozen by both parties?
+				.col-md-1
+					{{project.CCFrozen}}
+			.row
+				.col-md-11
+					p Has the Proto/PPAP PO been recieved?
+				.col-md-1
+					{{project.PPAPPORecieve}}
+			.row
+				.col-md-11
+					p Has the PPAP PO been verified for consistency with Quotation and Contract?
+				.col-md-1
+					{{project.PPAPPOReview}}
+			.row
+				.col-md-11
+					p Has the PO been accepted?
+				.col-md-1
+					{{project.POAccepted}}
