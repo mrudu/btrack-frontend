@@ -6,79 +6,81 @@
 				.col-md-11
 					p Has the Customer NDA been signed?
 				.col-md-1
-					{{project.NDA}}
+					input(type="checkbox",value="{{project.NDA}}",ng-model="propost.NDA")
 			.row
 				.col-md-11
 					p Has the PDS/Drawings been recieved?
 				.col-md-1
-					{{project.PDS}}
+					input(type="checkbox",ng-model="propost.PDS")
 			.row
 				.col-md-11
 					p Has the Prelimnary Feasibility report been signed?
 				.col-md-1
-					{{project.PFR}}
+					input(type="checkbox",ng-model="propost.PFR")
 			.row
 				.col-md-11
 					p Has the NBO been signed?
 				.col-md-1
-					{{project.NBO}}
+					input(type="checkbox",ng-model="propost.NBO")
 			.row
 				.col-md-11
 					p Has the Team Feasibility Commitment Report been signed?
 				.col-md-1
-					{{project.TFC}}
+					input(type="checkbox",ng-model="propost.TFC")
 			.row
 				.col-md-11
 					p Has the RS Summary Sheet been signed?
 				.col-md-1
-					{{project.IRS}}
+					input(type="checkbox",ng-model="propost.IRS")
 			.row
 				.col-md-11
 					p Has the Final RS Sheet been signed?
 				.col-md-1
-					{{project.FRS}}
+					input(type="checkbox",ng-model="propost.FRS")
 			.row
 				.col-md-11
 					p Has the Project been approved?
 				.col-md-1
-					{{project.ProjectApproved}}
+					input(type="checkbox",ng-model="propost.ProjectApproved")
 			.row
 				.col-md-11
 					p Has the Quotation been submitted?
 				.col-md-1
-					{{project.QUO}}
+					input(type="checkbox",ng-model="propost.QUO")
 			.row
 				.col-md-11
 					p Has the Letter Of Intent been recieved from the Customer?
 				.col-md-1
-					{{project.LOI}}
+					input(type="checkbox",ng-model="propost.LOI")
 			.row
 				.col-md-11
 					p Has the Customer Contract been recieved?
 				.col-md-1
-					{{project.CCRecieve}}
+					input(type="checkbox",ng-model="propost.CCRecieve")
 			.row
 				.col-md-11
 					p Has the Contract been sent to the Customer after review?
 				.col-md-1
-					{{project.CCReview}}
+					input(type="checkbox",ng-model="propost.CCReview")
 			.row
 				.col-md-11
 					p Has the Contract been frozen by both parties?
 				.col-md-1
-					{{project.CCFrozen}}
+					input(type="checkbox",ng-model="propost.CCFrozen")
 			.row
 				.col-md-11
 					p Has the Proto/PPAP PO been recieved?
 				.col-md-1
-					{{project.PPAPPORecieve}}
+					input(type="checkbox",ng-model="propost.PPAPPORecieve")
 			.row
 				.col-md-11
 					p Has the PPAP PO been verified for consistency with Quotation and Contract?
 				.col-md-1
-					{{project.PPAPPOReview}}
+					input(type="checkbox",ng-model="propost.PPAPPOReview")
 			.row
 				.col-md-11
 					p Has the PO been accepted?
 				.col-md-1
-					{{project.POAccepted}}
+					input(type="checkbox",ng-model="propost.POAccepted")
+.modal-footer
+	button.btn.btn-default.btn-warning(ng-click="submit(''+propost.id+'')") OK

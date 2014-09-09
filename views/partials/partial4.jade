@@ -32,16 +32,16 @@
 		.col-md-2
 			select.form-control(ng-model="postTask.workflow",required)
 				option(value="") --Choose Stage--
-				option(value="11") RFQ/ENQ
-				option(value="12") NBO
-				option(value="13") Quote
-				option(value="14") PO
-				option(value="15") PPAP
-				option(value="16") Final PO
-				option(value="17") First Revenue Shipment
+				option(value="1") RFQ/ENQ
+				option(value="2") NBO
+				option(value="3") Quote
+				option(value="4") PO
+				option(value="5") PPAP
+				option(value="6") Final PO
+				option(value="7") First Revenue Shipment
 		.col-md-2(ng-init="dateshow=false;")
 			p.input-group
-				input.form-control(type="date", ng-model="postTask.due_date",required,placeholder="Due Date")
+				input.form-control(type="text", ng-model="postTask.due_date",required,placeholder="Due Date")
 				span.input-group-btn
 					button.btn.btn-default(ng-click="dateshow=!dateshow;")
 						span.glyphicon.glyphicon-calendar
