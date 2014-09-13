@@ -7,7 +7,15 @@ function TimelineModalCtrl($scope, $modalInstance, projectId, protitle){
 	$scope.timeline = {};
 	$scope = timeline2($scope,projectId);
 }
-
+function ChartModalCtrl($scope,$modalInstance,projectId,protitle){
+	$scope.title = protitle;
+	$scope.data = {labels:[],datasets:[{label:"Total Revenue",fillColor:'#00A7C9',strokeColor:'#00697E',highlightFill:'#9AEDFD',highlightStroke:'#00697E',data:[]}]};
+	$scope.opt = {'barDatasetSpacing':50}
+	projectId.forEach(function(obj){
+		$scope.data.labels.push(obj.title.substring(0,5));
+		$scope.data.datasets[0].data.push(obj.tot_revenue/10000000);
+	});
+}
 /* Controller for Opportunity Progress Checklist Modal. Here the argument projectId refers to the primary key value of the Project. */
 function OPCctrl($scope, $http, $modalInstance, projectId,protitle){
 	$scope.title = protitle;
@@ -38,6 +46,13 @@ function editctrl($scope, $http, $modalInstance, projectId,protitle){
 	$scope.cancel = function(){
 		$modalInstance.close();
 	}
+	$scope.suspend = function(projectd,number,index){
+		var putData = {'status':number}
+		$http({method:'POST',url:'/api/put/project/'+projectd+'/',data:putData})
+		.success(function(data,status,headers,config){
+			$scope.project.status = number;
+		});
+	}
 	$scope.ok = function(){
 		$scope.project.life = $scope.project.life+2;
 		$scope.project.createdBy = "/api/v1/user/1/";
@@ -59,7 +74,8 @@ function editctrl($scope, $http, $modalInstance, projectId,protitle){
 }
 
 function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
-	$scope.title = protitle;
+	$scope.title = protitle.title;
+	$scope.status = protitle.status;
 	$scope.postTask = {};
 	var postData = {'btn':'?project__id='+projectId}
 	$http({method:'POST',url:'/api/filter/task/', data:postData })

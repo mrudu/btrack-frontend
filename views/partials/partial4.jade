@@ -1,7 +1,11 @@
 // Tasks Modal Partial
 .modal-header
 	.modal-title
-		h3 {{title}} Tasks
+		.row
+			.col-md-11
+				h3 {{title}} Tasks
+			.col-md-1
+				span.glyphicon.glyphicon-circle(class="blob-{{status}}",style="top:20px;")
 .modal-body
 	table.table.table-hover
 		thead
@@ -16,7 +20,8 @@
 		tbody
 			tr(ng-repeat = "task in tasks")
 				td {{$index+1}}
-				td {{task.workflow.name}}
+				td 
+					a.clickable(tooltip="{{task.workflow.description}}") {{task.workflow.name}}
 				td {{task.start_date| date}}
 				td {{task.due_date| date}}
 				td

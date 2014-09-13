@@ -220,9 +220,9 @@ function switch1(url){
 			postData.message = "Projects in ACE category";
 			break;
 
-		case "tc":
+		case "ntc":
 			postData.type= "TRANSFER CASE";
-			postData.btn = "?product=T/c";
+			postData.btn = "?product=NTC";
 			postData.message = "Projects in Transfer Case product category";
 			break;
 		case "synchro":

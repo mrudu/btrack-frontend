@@ -3,9 +3,9 @@
 	h3 {{title}} PROJECTS TIMELINE
 .timeline(ng-repeat = "time in timeline")
 	.row
-		.col-md-2
+		.col-md-3
 			{{time.title}}
-		.col-md-9(style="height:22px;")
+		.col-md-8(style="height:22px;")
 			progress(max="max_max")
 				bar(ng-repeat="x in time.values",value="x.value",type="{{x.type}}",class="{{x.inc}}")
 					a.clickable(style="color:white",tooltip="{{x.text}}")

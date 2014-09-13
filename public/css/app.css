@@ -95,6 +95,7 @@ body .glypicon-asterisk{
 	transition: all 0.3s ease;
 }
 .sidebar {
+	overflow-y:overlay;
 	width: 240px;
 	background-color: #535050;
 	position: fixed;
@@ -166,8 +167,4 @@ body .glypicon-asterisk{
 	width:auto;
 	top:98%;
 	left:-2px;
-}
-.table{
-	max-width:150%;
-	width:1197px;
 }

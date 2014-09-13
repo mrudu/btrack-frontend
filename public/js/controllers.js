@@ -43,24 +43,20 @@ function DashboardCtrl($scope, $routeParams,$http, $modal){
 	$scope.timeline = function(){
 		modal('3','TimelineModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
 	}
+	$scope.chart = function(){
+		modal('9','ChartModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
+	}
 	$scope.open = function(projectd,ptitle){
 		modal('2','remarkCtrl',projectd,ptitle,$modal,'modalclass');
 	}
 	$scope.edit = function(projectd,ptitle){
 		modal('6','editctrl',projectd,ptitle,$modal,'modalclass');
 	}
-	$scope.suspend = function(projectd,number,index){
-		var putData = {'status':number}
-		$http({method:'POST',url:'/api/put/project/'+projectd+'/',data:putData})
-		.success(function(data,status,headers,config){
-			$scope.projects[index].status = number;
-		});
-	}
 	$scope.opc = function(projectd,ptitle){
 		modal('8','OPCctrl',projectd,ptitle,$modal,'');
 	}
-	$scope.task = function(projectd,ptitle){
-		modal('4','taskCtrl',projectd,ptitle,$modal,'modalclass');
+	$scope.task = function(projectd,ptitle,pstatus){
+		modal('4','taskCtrl',projectd,{'title':ptitle,'status':pstatus},$modal,'modalclass');
 	}
 }
 

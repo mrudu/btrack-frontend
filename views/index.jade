@@ -19,12 +19,9 @@ block body
 							a.list-group-item.list-group-item-success(href="dashboard/h3p") Horizon 3 Projects
 							a.list-group-item.list-group-item-success(href="dashboard/npp") No Pull Projects
 							a.list-group-item.list-group-item-success(href="dashboard/sp") Suspended Projects
-					li.list-group-item
-						a.btn.btn-large.btn-block(ng-click="isCollapsed3=!isCollapsed3") Reports
-						.list-group(collapse="isCollapsed3")
-							a.list-group-item.list-group-item-warning(href="report/top10") TOP 10
-							.list-group-item.list-group-item-warning
-								a.clickable.list-group-item.list-group-item-warning(ng-click="isCollapsed4=!isCollapsed4") CATEGORY
+							a.list-group-item.list-group-item-success(href="report/top10") TOP 10
+							.list-group-item.list-group-item-success
+								a.clickable.list-group-item.list-group-item-success(ng-click="isCollapsed4=!isCollapsed4") CATEGORY
 								.list-group(collapse="isCollapsed4")
 									a.list-group-item.list-group-item-danger(href="report/ntc") Next Generation Transfer Cases
 									a.list-group-item.list-group-item-danger(href="report/wtc") World Transfer Cases
@@ -32,7 +29,7 @@ block body
 									a.list-group-item.list-group-item-danger(href="report/ptu") Next Trac Power Transfer Units
 									a.list-group-item.list-group-item-danger(href="report/comp") Components
 									a.list-group-item.list-group-item-danger(href="report/oth") Others
-							a.list-group-item.list-group-item-warning(href="report/lagging") LAGGING
+							a.list-group-item.list-group-item-success(href="report/lagging") LAGGING
 					li.list-group-item(ng-mouseover="isCollapsed2=false", ng-mouseleave="isCollapsed2=true").text-center
 						a.btn.btn-large.btn-block(ng-click="isCollapsed2=true") Create
 						.list-group(collapse="isCollapsed2")
@@ -52,6 +49,8 @@ block body
 					| Divgiwarner Pvt Ltd
 	script(src='js/lib/angular/angular.js')
 	script(src='js/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
+	script(src='js/lib/angular/Chart.js')
+	script(src='js/lib/angular/tc-angular-chartjs.js')
 	script(src='js/lib/angular/angular-route.js')
 	script(src='js/commonFunctions.js')
 	script(src='js/app.js')

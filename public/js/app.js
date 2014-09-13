@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['ui.bootstrap','myApp.filters', 'myApp.services', 'myApp.directives','ngRoute']).
+angular.module('myApp', ['ui.bootstrap','myApp.filters', 'myApp.services', 'myApp.directives','ngRoute','tc.chartjs']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/summary',{templateUrl:'partial/7',controller: SummaryCtrl});
     $routeProvider.when('/dashboard/:project', {templateUrl:'partial/1', controller: DashboardCtrl});
