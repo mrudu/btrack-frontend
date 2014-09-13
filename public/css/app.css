@@ -1,4 +1,22 @@
 /* app css stylesheet */
+.glyphicon-circle{
+	width: 28px;
+	height: 28px;
+	border-radius: 14px;
+	left: 9px;
+}
+.blob-0{
+	background-color:rgb(66,201,41);
+}
+.blob-1{
+	background-color:rgb(252,203,49);
+}
+.blob-2{
+	background-color:rgb(252,122,49);
+}
+.blob-3{
+	background-color:rgb(252,49,90);
+}
 .timeline .progress{
 	background-color:white;
 	-webkit-box-shadow: none;
@@ -22,8 +40,7 @@
 .progress-bar-FRS{
 	background-color:black;
 }
-.samp button{
-	margin:0px;
+.dropdown-menu button{
 	border:0px;
 	border-radius:0px;
 }
@@ -125,6 +142,9 @@ body .glypicon-asterisk{
 .borderless .btn-default{
 	border-color: white;
 }
+.btn-group{
+	margin-left:14px;
+}
 .datepickerstyle{
 	width: 270px;
 	position:absolute;
@@ -138,4 +158,16 @@ body .glypicon-asterisk{
 	background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
 	-webkit-background-size: 40px 40px;
 	background-size: 40px 40px;
+}
+.dropdown-menu {
+	min-width : 0px;
+	padding:0px;
+	margin:0px;
+	width:auto;
+	top:98%;
+	left:-2px;
+}
+.table{
+	max-width:150%;
+	width:1197px;
 }

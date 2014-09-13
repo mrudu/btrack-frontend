@@ -5,9 +5,11 @@ var request = require('request-json');
 var client = request.newClient("http://localhost:8000/api/v1/");
 
 exports.name = function (req, res) {
-  res.json({
-  	name: 'Vijay'
-  });
+	client.get('statusupdate/',function(err,resp,body){
+	});
+	res.json({
+		name: 'Vijay'
+	});
 };
 
 exports.report = function(req,res){

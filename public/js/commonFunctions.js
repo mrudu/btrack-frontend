@@ -14,7 +14,10 @@ function timeline2($scope,data){
 	var inctext = "";
 	$scope.max_max= 0;
 	var type = "";
+	var count = 0;
 	data.forEach(function(obj){
+		max = 0;
+		count = 0;
 		var current = [];
 		var start_date= Date();
 		var end_date = Date();
@@ -32,7 +35,8 @@ function timeline2($scope,data){
 					end_date = new Date(task.start_date);
 					currobj.value = monthDiff(start_date,end_date)+1;
 					max += currobj.value;
-					currobj.text = inctext;
+					count++;
+					currobj.text = "ENQ->NBO";
 					currobj.type="ENQ";
 					current.push(currobj);
 					inctext = "NBO->Q";
@@ -43,7 +47,8 @@ function timeline2($scope,data){
 					end_date = new Date(task.start_date);
 					currobj.value = monthDiff(start_date,end_date)+1;
 					max += currobj.value;
-					currobj.text = inctext;
+					count++;
+					currobj.text = "NBO->Q";
 					currobj.type="NBO";
 					current.push(currobj);
 					inctext = "Q->IPO";
@@ -54,7 +59,8 @@ function timeline2($scope,data){
 					end_date = new Date(task.start_date);
 					currobj.value = monthDiff(start_date,end_date)+1;
 					max += currobj.value;
-					currobj.text = inctext;
+					count++;
+					currobj.text = "Q->IPO";
 					currobj.type="QUOTE";
 					current.push(currobj);
 					inctext = "IPO->PPAPSub";
@@ -65,40 +71,56 @@ function timeline2($scope,data){
 					end_date = new Date(task.start_date);
 					currobj.value = monthDiff(start_date,end_date)+1;
 					max += currobj.value;
-					currobj.text = inctext;
+					count++;
+					currobj.text = "IPO->PPAPSub";
 					currobj.type="PPAPSUB";
 					current.push(currobj);
 					inctext = "";
 					type = "";
 					currobj ={'value':0,'type':'success','text':'','inc':''};
 					start_date = end_date;
-					if(task.end_date == null){
+					if(task.end_date){
+						currobj.text = "PPAPSub->Appr";
+						currobj.type = "PPAPAPP";
+						end_date = new Date(task.end_date);
+						currobj.value = monthDiff(start_date, end_date)+1;
+						max += currobj.value;
+						count++;
+						current.push(currobj);
+
+					} else {
 						currobj.text = "PPAPSub->Appr";
 						currobj.value = monthDiff(start_date, today)+1;
 						currobj.type = "PPAPAPP";
 						currobj.inc = 'progress-striped active';
 						max += currobj.value;
+						count++;
 						current.push(currobj);
 						return;
 					}
-					currobj.text = "PPAPSub->Appr";
-					currobj.type = "PPAPAPP";
-					end_date = new Date(task.end_date);
-					currobj.value = monthDiff(start_date, end_date)+1;
-					max += currobj.value;
-					current.push(currobj);
+					inctext = "PPAPAppr->FPO";
+					type = "danger";
 					break;
 				case 6:
-					start_date = new Date(task.start_date);
+					end_date = new Date(task.start_date);
+					currobj.value = monthDiff(start_date,end_date)+1;
+					currobj.text = "PPAPAppr->FPO";
+					currobj.type = "danger";
+					current.push(currobj);
+					max += currobj.value;
+					count++;
+					start_date = end_date;
 					inctext = "FPO->FRS";
 					type = "FRS";
 					break;
 				case 7:
 					end_date = new Date(task.start_date);
 					currobj.value = monthDiff(start_date,end_date)+1;
-					currobj.text = inctext;
+					currobj.text = "FPO->FRS";
 					currobj.type = "FRS";
 					current.push(currobj);
+					max += currobj.value;
+					count++;
 					inctext = "";
 					break;
 				default:
@@ -111,17 +133,18 @@ function timeline2($scope,data){
 			currobj.text = inctext;
 			currobj.type=type;
 			current.push(currobj);
+			max += currobj.value;
+			count++;
 		}
-		if($scope.max_max<max){
-			$scope.max_max = max;
+		$scope.timeline[obj.part_no] = {'title':obj.title,'values':current, 'maxv':max-count}
+		if($scope.max_max < max){
+			$scope.max_max = max+5;
 		}
-		$scope.timeline[obj.part_no] = {'title':obj.title,'values':current}
-		max = 0;
+		console.log($scope.max_max+"-"+max);
 	});
-	console.log($scope.timeline);
 	return $scope;
 }
-function modal(temp, ctrl, projectd, $modal,wclass){
+function modal(temp, ctrl, projectd,ptitle, $modal,wclass){
 	var modalInstance = $modal.open({
 		templateUrl: 'partial/'+temp,
 	    	controller: ctrl,
@@ -129,6 +152,9 @@ function modal(temp, ctrl, projectd, $modal,wclass){
 	    	resolve: {
 			projectId: function(){
 				return projectd;
+			},
+	    		protitle: function(){
+				return ptitle;
 			}
 		}
 	});

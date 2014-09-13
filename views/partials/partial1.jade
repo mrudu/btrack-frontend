@@ -13,32 +13,48 @@
 			tr(ng-init="reverse=true")
 				th #
 				th.clickable(ng-click="predicate='title';reverse=!reverse") Project Title
-				th.clickable(ng-click="predicate='customer.name';reverse=!reverse") Customer
-				th.text-right.clickable(ng-click="predicate='year_revenue';reverse=!reverse") Revenue per year
-				th.text-right.clickable(ng-click="predicate='tot_revenue';reverse=!reverse") Total Revenue
-				th.clickable(ng-click="predicate='sopDate';reverse=!reverse") Start Of Production
-				th.clickable(ng-click="predicate='winprobability';reverse=!reverse") Win Probability
-				th.text-center Details
+				th.clickable(ng-click="predicate='customer.name';reverse=!reverse",style="width:154px;") Customer
+				th.text-right.clickable(ng-click="predicate='year_revenue';reverse=!reverse",style="width:154px;") Revenue per year
+				th.text-right.clickable(ng-click="predicate='tot_revenue';reverse=!reverse",style="width:154px;") Total Revenue
+				th.text-center.clickable(ng-click="predicate='sopDate';reverse=!reverse")
+					abbr(title="Start Of Production Date") SOP
+				th.clickable(ng-click="predicate='winprobability';reverse=!reverse")
+					abbr(title="Win Probability") WP
+				th Status
+				th Details
 		tbody
 			tr(ng-repeat="project in projects| orderBy: predicate: reverse")
 				td {{$index + 1}}
 				td 
-					abbr(title="{{project.title}}") {{project.title.substring(0,10)}}
-				td {{project.customer.name}}
-				td.text-right {{project.year_revenue| indno}}
-				td.text-right {{project.tot_revenue| indno}}
-				td(ng-init="sum(project.year_revenue,project.tot_revenue)") {{project.sopDate | date: 'dd MMM,yyyy'}}
+					abbr(title="{{project.title}}") {{project.title.substring(0,15)}}
+				td(style="width:154;") {{project.customer.name}}
+				td.text-right(style="width:154;") {{project.year_revenue| indno}}
+				td.text-right(style="width:154;") {{project.tot_revenue| indno}}
+				td.text-center(ng-init="sum(project.year_revenue,project.tot_revenue)") {{project.sopDate | date: 'dd MMM,yyyy'}}
 				td {{project.winprobability}}
 				td
-					.samp
-						button.btn.btn-default(ng-click="open(''+project.id+'')")
-							span.glyphicon.glyphicon-comment
-						button.btn.btn-default(ng-click="edit(project)")
-							span.glyphicon.glyphicon-edit
-						button.btn.btn-default(ng-click="task(''+project.id)",ng-hide="hide")
-							span.glyphicon.glyphicon-dashboard
-						button.btn.btn-default(ng-click="opc(''+project.id)")
-							span.glyphicon.glyphicon-check
+					span.glyphicon.glyphicon-circle(class="blob-{{project.late_status}}")
+				td
+					.btn-group(dropdown, is-open="openb",ng-init="openb=false;")
+						button.btn.btn-primary.btn-sm.dropdown-toggle
+							span.glyphicon.glyphicon-chevron-down
+						ul.dropdown-menu(role="menu")
+							li
+								button.btn.btn-success(ng-click="open(''+project.id,project.title+'')")
+									a.clickable(tooltip="Remarks",style="color:white;")
+										span.glyphicon.glyphicon-comment
+							li
+								button.btn.btn-success(ng-click="edit(project)")
+									a.clickable(tooltip="Edit Project",style="color:white;")
+										span.glyphicon.glyphicon-edit
+							li
+								button.btn.btn-success(ng-click="task(''+project.id,''+project.title)",ng-hide="hide")
+									a.clickable(tooltip="Tasks",style="color:white;")
+										span.glyphicon.glyphicon-dashboard
+							li
+								button.btn.btn-success(ng-click="opc(''+project.id,''+project.title)")
+									a.clickable(tooltip="Opportunity Progress Checklist",style="color:white;")
+										span.glyphicon.glyphicon-check
 		tfoot
 			tr.info
 				td

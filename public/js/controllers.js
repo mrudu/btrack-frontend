@@ -41,13 +41,13 @@ function DashboardCtrl($scope, $routeParams,$http, $modal){
 	});
 
 	$scope.timeline = function(){
-		modal('3','TimelineModalCtrl',$scope.projects,$modal,'timelinemodal');
+		modal('3','TimelineModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
 	}
-	$scope.open = function(projectd){
-		modal('2','remarkCtrl',projectd,$modal,'modalclass');
+	$scope.open = function(projectd,ptitle){
+		modal('2','remarkCtrl',projectd,ptitle,$modal,'modalclass');
 	}
-	$scope.edit = function(projectd){
-		modal('6','editctrl',projectd,$modal,'modalclass');
+	$scope.edit = function(projectd,ptitle){
+		modal('6','editctrl',projectd,ptitle,$modal,'modalclass');
 	}
 	$scope.suspend = function(projectd,number,index){
 		var putData = {'status':number}
@@ -56,11 +56,11 @@ function DashboardCtrl($scope, $routeParams,$http, $modal){
 			$scope.projects[index].status = number;
 		});
 	}
-	$scope.opc = function(projectd){
-		modal('8','OPCctrl',projectd,$modal,'');
+	$scope.opc = function(projectd,ptitle){
+		modal('8','OPCctrl',projectd,ptitle,$modal,'');
 	}
-	$scope.task = function(projectd){
-		modal('4','taskCtrl',projectd,$modal,'modalclass');
+	$scope.task = function(projectd,ptitle){
+		modal('4','taskCtrl',projectd,ptitle,$modal,'modalclass');
 	}
 }
 
@@ -96,6 +96,6 @@ var CreateProjectCtrl = function($scope, $http, $modal){
 	}
 	/* Opens the Customer modal. */
 	$scope.open = function(){
-		modal('5','CreateCustomerCtrl',0,$modal,'');
+		modal('5','CreateCustomerCtrl',0,"",$modal,'');
 	}
 }

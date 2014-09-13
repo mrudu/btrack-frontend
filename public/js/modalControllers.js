@@ -2,13 +2,15 @@
 /* Modal Controllers */
 
 /* Controller for Timeline Modal. Argument projectId consists of the list of projects. */
-function TimelineModalCtrl($scope, $modalInstance, projectId){
+function TimelineModalCtrl($scope, $modalInstance, projectId, protitle){
+	$scope.title = protitle;
 	$scope.timeline = {};
 	$scope = timeline2($scope,projectId);
 }
 
 /* Controller for Opportunity Progress Checklist Modal. Here the argument projectId refers to the primary key value of the Project. */
-function OPCctrl($scope, $http, $modalInstance, projectId){
+function OPCctrl($scope, $http, $modalInstance, projectId,protitle){
+	$scope.title = protitle;
 	$scope.propost = {};
 	var postData = {'btn':'?project__id='+projectId}
 	$http({method: 'POST', url:'/api/filter/opc',data:postData}).
@@ -22,7 +24,8 @@ function OPCctrl($scope, $http, $modalInstance, projectId){
 }
 
 /* Controller for Edit Project Modal. Uses the same template as in Create Modal. */
-function editctrl($scope, $http, $modalInstance, projectId){
+function editctrl($scope, $http, $modalInstance, projectId,protitle){
+	$scope.title = protitle;
 	$scope.project = {};
 	$scope.alerts = [];
 	$http({method: 'GET', url: '/api/customer'}).
@@ -55,7 +58,8 @@ function editctrl($scope, $http, $modalInstance, projectId){
 	}
 }
 
-function taskCtrl($scope, $http, $modalInstance, projectId){
+function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
+	$scope.title = protitle;
 	$scope.postTask = {};
 	var postData = {'btn':'?project__id='+projectId}
 	$http({method:'POST',url:'/api/filter/task/', data:postData })
@@ -79,7 +83,8 @@ function taskCtrl($scope, $http, $modalInstance, projectId){
 		});
 	}
 }
-function remarkCtrl($scope, $http, $modalInstance, projectId){
+function remarkCtrl($scope, $http, $modalInstance, projectId,protitle){
+	$scope.title = protitle;
 	$scope.postRemark = {};
 	var postData = {'btn': "?project__id="+projectId}
 	$http({method:'POST',url:'/api/filter/remark/', data:postData })
@@ -99,7 +104,8 @@ function remarkCtrl($scope, $http, $modalInstance, projectId){
 		$modalInstance.close();
 	}
 }
-function CreateCustomerCtrl($scope, $http,$modalInstance,projectId){
+function CreateCustomerCtrl($scope, $http,$modalInstance,projectId,protitle){
+	$scope.title = protitle;
 	$scope.alerts = [];
 	$scope.customer = {};
 	$scope.ok = function() {

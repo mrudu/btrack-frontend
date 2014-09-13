@@ -1,14 +1,16 @@
 // Timeline Ctrl
 .page-header.text-center
-	h3 TIMELINE
+	h3 {{title}} PROJECTS TIMELINE
 .timeline(ng-repeat = "time in timeline")
 	.row
-		.col-md-3
+		.col-md-2
 			{{time.title}}
 		.col-md-9(style="height:22px;")
 			progress(max="max_max")
 				bar(ng-repeat="x in time.values",value="x.value",type="{{x.type}}",class="{{x.inc}}")
 					a.clickable(style="color:white",tooltip="{{x.text}}")
 						strong {{x.value-1}}
+		.col-md-1
+			{{time.maxv}}
 	hr(style="margin:10px;")
 
