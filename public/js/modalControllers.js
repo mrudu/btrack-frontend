@@ -5,7 +5,15 @@
 function TimelineModalCtrl($scope, $modalInstance, projectId, protitle){
 	$scope.title = protitle;
 	$scope.timeline = {};
-	$scope = timeline2($scope,projectId);
+	$scope.max_max = 0;
+	projectId.forEach(function(obj){
+		var x = time(obj);
+		$scope.timeline[obj.part_no] = {'title':obj.title,'values':x.current, 'maxv':x.max-x.count}
+		if($scope.max_max < x.max){
+			$scope.max_max = x.max+5;
+		}
+		console.log($scope.max_max+"-"+x.max);
+	});
 }
 function ChartModalCtrl($scope,$modalInstance,projectId,protitle){
 	$scope.title = protitle;
@@ -74,12 +82,15 @@ function editctrl($scope, $http, $modalInstance, projectId,protitle){
 }
 
 function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
+	$scope.max_max = 52;
 	$scope.title = protitle.title;
 	$scope.status = protitle.status;
 	$scope.postTask = {};
 	var postData = {'btn':'?project__id='+projectId}
 	$http({method:'POST',url:'/api/filter/task/', data:postData })
 	.success(function(data, status, headers, config){
+		var x = time({'tasks':data.body.objects});
+		$scope.time = x;
 		$scope.tasks = data.body.objects;
 	});
 	$scope.complete = function(taskid,index){

@@ -7,142 +7,128 @@ function monthDiff(d1, d2) {
 	return months <= 0 ? 0 : months;
 }
 
-/* Prepares the timeline array for the timeline modal.The input argument should contain an array of Projects. */
+/* Prepares the timeline array for the timeline modal.The input argument should contain a Project datatype. */
 
-function timeline2($scope,data){
-	var max = 0;
+function time(obj){
+	var max = 0,count=0;
+	var current = [];
+	var start_data = Date();
+	var end_date = Date();
 	var inctext = "";
-	$scope.max_max= 0;
-	var type = "";
-	var count = 0;
-	data.forEach(function(obj){
-		max = 0;
-		count = 0;
-		var current = [];
-		var start_date= Date();
-		var end_date = Date();
-		inctext = "";
-		type = "";
-		obj.tasks.forEach(function(task){
-			var currobj ={'value':0,'type':'success','text':'','inc':''};
-			switch(task.workflow.id){
-				case 1:
-					start_date = new Date(task.start_date);
-					inctext = "ENQ->NBO";
-					type = "ENQ";
-					break;
-				case 2:
-					end_date = new Date(task.start_date);
-					currobj.value = monthDiff(start_date,end_date)+1;
+	var type="";
+	obj.tasks.forEach(function(task){
+		var currobj ={'value':0,'type':'success','text':'','inc':''};
+		switch(task.workflow.id){
+			case 1:
+				start_date = new Date(task.start_date);
+				inctext = "ENQ->NBO";
+				type = "ENQ";
+				break;
+			case 2:
+				end_date = new Date(task.start_date);
+				currobj.value = monthDiff(start_date,end_date)+1;
+				max += currobj.value;
+				count++;
+				currobj.text = "ENQ->NBO";
+				currobj.type="ENQ";
+				current.push(currobj);
+				inctext = "NBO->Q";
+				type = "NBO";
+				start_date = end_date;
+				break;
+			case 3:
+				end_date = new Date(task.start_date);
+				currobj.value = monthDiff(start_date,end_date)+1;
+				max += currobj.value;
+				count++;
+				currobj.text = "NBO->Q";
+				currobj.type="NBO";
+				current.push(currobj);
+				inctext = "Q->IPO";
+				start_date = end_date;
+				type = "QUOTE";
+				break;
+			case 4:
+				end_date = new Date(task.start_date);
+				currobj.value = monthDiff(start_date,end_date)+1;
+				max += currobj.value;
+				count++;
+				currobj.text = "Q->IPO";
+				currobj.type="QUOTE";
+				current.push(currobj);
+				inctext = "IPO->PPAPSub";
+				start_date = end_date;
+				type = "PPAPSUB";
+				break;
+			case 5:
+				end_date = new Date(task.start_date);
+				currobj.value = monthDiff(start_date,end_date)+1;
+				max += currobj.value;
+				count++;
+				currobj.text = "IPO->PPAPSub";
+				currobj.type="PPAPSUB";
+				current.push(currobj);
+				inctext = "";
+				type = "";
+				currobj ={'value':0,'type':'success','text':'','inc':''};
+				start_date = end_date;
+				if(task.end_date){
+					currobj.text = "PPAPSub->Appr";
+					currobj.type = "PPAPAPP";
+					end_date = new Date(task.end_date);
+					currobj.value = monthDiff(start_date, end_date)+1;
 					max += currobj.value;
 					count++;
-					currobj.text = "ENQ->NBO";
-					currobj.type="ENQ";
 					current.push(currobj);
-					inctext = "NBO->Q";
-					type = "NBO";
-					start_date = end_date;
-					break;
-				case 3:
-					end_date = new Date(task.start_date);
-					currobj.value = monthDiff(start_date,end_date)+1;
+				} else {
+					currobj.text = "PPAPSub->Appr";
+					currobj.value = monthDiff(start_date, today)+1;
+					currobj.type = "PPAPAPP";
+					currobj.inc = 'progress-striped active';
 					max += currobj.value;
 					count++;
-					currobj.text = "NBO->Q";
-					currobj.type="NBO";
 					current.push(currobj);
-					inctext = "Q->IPO";
-					start_date = end_date;
-					type = "QUOTE";
-					break;
-				case 4:
-					end_date = new Date(task.start_date);
-					currobj.value = monthDiff(start_date,end_date)+1;
-					max += currobj.value;
-					count++;
-					currobj.text = "Q->IPO";
-					currobj.type="QUOTE";
-					current.push(currobj);
-					inctext = "IPO->PPAPSub";
-					start_date = end_date;
-					type = "PPAPSUB";
-					break;
-				case 5:
-					end_date = new Date(task.start_date);
-					currobj.value = monthDiff(start_date,end_date)+1;
-					max += currobj.value;
-					count++;
-					currobj.text = "IPO->PPAPSub";
-					currobj.type="PPAPSUB";
-					current.push(currobj);
-					inctext = "";
-					type = "";
-					currobj ={'value':0,'type':'success','text':'','inc':''};
-					start_date = end_date;
-					if(task.end_date){
-						currobj.text = "PPAPSub->Appr";
-						currobj.type = "PPAPAPP";
-						end_date = new Date(task.end_date);
-						currobj.value = monthDiff(start_date, end_date)+1;
-						max += currobj.value;
-						count++;
-						current.push(currobj);
-
-					} else {
-						currobj.text = "PPAPSub->Appr";
-						currobj.value = monthDiff(start_date, today)+1;
-						currobj.type = "PPAPAPP";
-						currobj.inc = 'progress-striped active';
-						max += currobj.value;
-						count++;
-						current.push(currobj);
-						return;
-					}
-					inctext = "PPAPAppr->FPO";
-					type = "danger";
-					break;
-				case 6:
-					end_date = new Date(task.start_date);
-					currobj.value = monthDiff(start_date,end_date)+1;
-					currobj.text = "PPAPAppr->FPO";
-					currobj.type = "danger";
-					current.push(currobj);
-					max += currobj.value;
-					count++;
-					start_date = end_date;
-					inctext = "FPO->FRS";
-					type = "FRS";
-					break;
-				case 7:
-					end_date = new Date(task.start_date);
-					currobj.value = monthDiff(start_date,end_date)+1;
-					currobj.text = "FPO->FRS";
-					currobj.type = "FRS";
-					current.push(currobj);
-					max += currobj.value;
-					count++;
-					inctext = "";
-					break;
-				default:
 					return;
-			}
-		});
-		if(inctext != ""){
-			var currobj ={'value':0,'type':'success','text':'','inc':'progress-striped active'};
-			currobj.value = monthDiff(start_date,today)+1;
-			currobj.text = inctext;
-			currobj.type=type;
-			current.push(currobj);
-			max += currobj.value;
-			count++;
+				}
+				inctext = "PPAPAppr->FPO";
+				type = "danger";
+				break;
+			case 6:
+				end_date = new Date(task.start_date);
+				currobj.value = monthDiff(start_date,end_date)+1;
+				currobj.text = "PPAPAppr->FPO";
+				currobj.type = "danger";
+				current.push(currobj);
+				max += currobj.value;
+				count++;
+				start_date = end_date;
+				inctext = "FPO->FRS";
+				type = "FRS";
+				break;
+			case 7:
+				end_date = new Date(task.start_date);
+				currobj.value = monthDiff(start_date,end_date)+1;
+				currobj.text = "FPO->FRS";
+				currobj.type = "FRS";
+				current.push(currobj);
+				max += currobj.value;
+				count++;
+				inctext = "";
+				break;
+			default:
+				return;
 		}
-		$scope.timeline[obj.part_no] = {'title':obj.title,'values':current, 'maxv':max-count}
-		if($scope.max_max < max){
-			$scope.max_max = max+5;
-		}
-		console.log($scope.max_max+"-"+max);
 	});
-	return $scope;
+	if(inctext != ""){
+		var currobj ={'value':0,'type':'success','text':'','inc':'progress-striped active'};
+		currobj.value = monthDiff(start_date,today)+1;
+		currobj.text = inctext;
+		currobj.type=type;
+		current.push(currobj);
+		max += currobj.value;
+		count++;
+	}
+	return {'max':max,'current':current,'count':count};
 }
 function modal(temp, ctrl, projectd,ptitle, $modal,wclass){
 	var modalInstance = $modal.open({
