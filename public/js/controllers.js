@@ -43,8 +43,11 @@ function DashboardCtrl($scope, $routeParams,$http, $modal){
 	$scope.timeline = function(){
 		modal('3','TimelineModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
 	}
-	$scope.chart = function(){
-		modal('9','ChartModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
+	$scope.piechart = function(){
+		modal('10','PieChartModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
+	}
+	$scope.barchart = function(){
+		modal('9','BarChartModalCtrl',$scope.projects,switchData.type,$modal,'timelinemodal');
 	}
 	$scope.open = function(projectd,ptitle){
 		modal('2','remarkCtrl',projectd,ptitle,$modal,'modalclass');

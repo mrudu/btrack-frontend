@@ -9,8 +9,12 @@
 				button.btn.btn-success.btn-default(ng-click="timeline()")
 					span.glyphicon.glyphicon-time
 				&nbsp;&nbsp;
-				button.btn.btn-warning.btn-default(ng-click="chart()")
+				button.btn.btn-warning.btn-default(ng-click="barchart()")
 					span.glyphicon.glyphicon-stats
+				&nbsp;&nbsp;
+				button.btn.btn-info.btn-default(ng-click="piechart()")
+					i.fa.fa-adjust.fa-lg
+
 	table.table.table-hover
 		thead
 			tr(ng-init="reverse=true")
@@ -32,9 +36,9 @@
 					abbr(title="{{project.title}}") {{project.title.substring(0,20)}}
 				td(style="width:154;") {{project.customer.name}}
 				td.text-right(style="width:124;")
-					a.clickable(tooltip="{{project.year_revenue| indno}}",style="color:black;") {{project.year_revenue/10000000| number:2}}L
+					a.clickable(tooltip="{{project.year_revenue| indno}}",style="color:black;") {{project.year_revenue/100000| number:2}}
 				td.text-right(style="width:124;")
-					a.clickable(tooltip="{{project.tot_revenue| indno}}",style="color:black;") {{project.tot_revenue/10000000| number:2}}L
+					a.clickable(tooltip="{{project.tot_revenue| indno}}",style="color:black;") {{project.tot_revenue/100000| number:2}}
 				td.text-center(ng-init="sum(project.year_revenue,project.tot_revenue)") {{project.sopDate | date: 'dd MMM,yyyy'}}
 				td {{project.winprobability}}
 				td

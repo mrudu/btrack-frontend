@@ -15,13 +15,21 @@ function TimelineModalCtrl($scope, $modalInstance, projectId, protitle){
 		console.log($scope.max_max+"-"+x.max);
 	});
 }
-function ChartModalCtrl($scope,$modalInstance,projectId,protitle){
+function BarChartModalCtrl($scope,$modalInstance,projectId,protitle){
 	$scope.title = protitle;
 	$scope.data = {labels:[],datasets:[{label:"Total Revenue",fillColor:'#00A7C9',strokeColor:'#00697E',highlightFill:'#9AEDFD',highlightStroke:'#00697E',data:[]}]};
 	$scope.opt = {'barDatasetSpacing':50}
 	projectId.forEach(function(obj){
 		$scope.data.labels.push(obj.title.substring(0,5));
 		$scope.data.datasets[0].data.push(obj.tot_revenue/10000000);
+	});
+}
+function PieChartModalCtrl($scope,$modalInstance,projectId,protitle){
+	$scope.title = protitle;
+	$scope.data = [];
+	$scope.opt = {'barDatasetSpacing':50}
+	projectId.forEach(function(ob){
+		$scope.data.push({'value':ob.tot_revenue/100000,'color':Math.floor(Math.random()*16777215).toString(16),'highlight':Math.floor(Math.random()*16777215).toString(16),'label':ob.title});
 	});
 }
 /* Controller for Opportunity Progress Checklist Modal. Here the argument projectId refers to the primary key value of the Project. */
