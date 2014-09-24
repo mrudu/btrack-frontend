@@ -1,16 +1,23 @@
 // Timeline Ctrl
 .page-header.text-center
 	h3 {{title}} PROJECTS TIMELINE
+	.row(ng-init="reverse=true;")
+		.col-md-3
+			strong.text-right.clickable(ng-click="predicate='title';reverse=!reverse") Project Title
+		.col-md-8
+			strong Timeline
+		.col-md-1
+			strong.text-right.clickable(ng-click="predicate='maxv';reverse=!reverse") Weeks
 .timeline(ng-repeat = "time in timeline")
 	.row
-		.col-md-3
-			{{time.title}}
+		.col-md-3(ng-click="task(''+time.id,''+time.title,''+time.status)")
+			a.clickable(tooltip="{{time.customer}}",style="color:black;") {{time.title.substring(0,26)}}
 		.col-md-8(style="height:22px;")
 			progress(max="max_max")
 				bar(ng-repeat="x in time.values",value="x.value",type="{{x.type}}",class="{{x.inc}}")
 					a.clickable(style="color:white",tooltip="{{x.text}}")
-						strong {{x.value-1}}
+						strong {{x.value| number:0}}
 		.col-md-1
-			{{time.maxv}}
+			{{time.maxv|number:0}}
 	hr(style="margin:10px;")
 

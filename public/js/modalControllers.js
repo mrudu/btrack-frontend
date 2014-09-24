@@ -2,18 +2,20 @@
 /* Modal Controllers */
 
 /* Controller for Timeline Modal. Argument projectId consists of the list of projects. */
-function TimelineModalCtrl($scope, $modalInstance, projectId, protitle){
+function TimelineModalCtrl($scope, $modalInstance, projectId, protitle, $modal){
 	$scope.title = protitle;
 	$scope.timeline = {};
 	$scope.max_max = 0;
-	projectId.forEach(function(obj){
+	var foreachcall = projectId.forEach(function(obj){
 		var x = time(obj);
-		$scope.timeline[obj.part_no] = {'title':obj.title,'values':x.current, 'maxv':x.max-x.count}
+		$scope.timeline[obj.title] = {'title':obj.title,'values':x.current, 'maxv':x.max-x.count,'id':obj.id,'status':obj.late_status,'customer':obj.customer.name}
 		if($scope.max_max < x.max){
 			$scope.max_max = x.max+5;
 		}
-		console.log($scope.max_max+"-"+x.max);
 	});
+	$scope.task = function(projectd,ptitle,pstatus){
+		modal('4','taskCtrl',projectd,{'title':ptitle,'status':pstatus},$modal,'small');
+	}
 }
 function BarChartModalCtrl($scope,$modalInstance,projectId,protitle){
 	$scope.title = protitle;
@@ -24,12 +26,30 @@ function BarChartModalCtrl($scope,$modalInstance,projectId,protitle){
 		$scope.data.datasets[0].data.push(obj.tot_revenue/10000000);
 	});
 }
+function getRandomColor(){
+	var letters = '0123456789ABCDEF'.split('');
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+		color += letters[Math.round(Math.random() * 15)];
+	}
+	return color;
+}
 function PieChartModalCtrl($scope,$modalInstance,projectId,protitle){
 	$scope.title = protitle;
 	$scope.data = [];
 	$scope.opt = {'barDatasetSpacing':50}
 	projectId.forEach(function(ob){
-		$scope.data.push({'value':ob.tot_revenue/100000,'color':Math.floor(Math.random()*16777215).toString(16),'highlight':Math.floor(Math.random()*16777215).toString(16),'label':ob.title});
+		$scope.data.push({'value':ob.tot_revenue/100000,'color':getRandomColor(),'highlight':getRandomColor(),'label':ob.title});
+	});
+}
+function CategoryPieChartModalCtrl($scope,$modalInstance,$http){
+	$scope.data = [];
+	$http({method:'GET',url:'/api/cpc'}).success(function(data,status,headers,config){
+		$scope.data.push({'value':data.body.ntc,'color':'#FF4D4D','highlight':'#FF9191','label':'Next Generation Transfer Cases'});
+		$scope.data.push({'value':data.body.wtc,'color':'#F8E505','highlight':'#FDF488','label':'World Transfer Cases'});
+		$scope.data.push({'value':data.body.ptu,'color':'#1FFF00','highlight':'#9BEE8F','label':'Power Transfer Units'});
+		$scope.data.push({'value':data.body.syn,'color':'#02B2B9','highlight':'#97D9DB','label':'Synchronizers'});
+		$scope.data.push({'value':data.body.com,'color':'#C900F0','highlight':'#E097EE','label':'Components'});
 	});
 }
 /* Controller for Opportunity Progress Checklist Modal. Here the argument projectId refers to the primary key value of the Project. */
@@ -63,7 +83,7 @@ function editctrl($scope, $http, $modalInstance, projectId,protitle){
 		$modalInstance.close();
 	}
 	$scope.suspend = function(projectd,number,index){
-		var putData = {'status':number}
+		var putData = {'status':number,'late_status':4}
 		$http({method:'POST',url:'/api/put/project/'+projectd+'/',data:putData})
 		.success(function(data,status,headers,config){
 			$scope.project.status = number;
@@ -74,7 +94,7 @@ function editctrl($scope, $http, $modalInstance, projectId,protitle){
 		$scope.project.createdBy = "/api/v1/user/1/";
 		$scope.project.customer = "/api/v1/customer/"+$scope.custom.id+'/';
 		console.log($scope.project.customer);
-		$http.post('/api/put/project/'+projectId, $scope.project)
+		$http.post('/api/put/project/'+projectId.id, $scope.project)
 		.success(function(){
 			$scope.alerts.push({type:'success', msg:'Well done! You\'ve successfully edited the project!'});
 			$scope.project.life = $scope.project.life-2;
@@ -98,6 +118,7 @@ function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
 	$http({method:'POST',url:'/api/filter/task/', data:postData })
 	.success(function(data, status, headers, config){
 		var x = time({'tasks':data.body.objects});
+		console.log(x);
 		$scope.time = x;
 		$scope.tasks = data.body.objects;
 	});

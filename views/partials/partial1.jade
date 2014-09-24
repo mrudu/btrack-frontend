@@ -1,10 +1,14 @@
 // Dashboard Partial
 .panel.panel-success.projects
-	.panel-heading(ng-init="tota1=0;tota2=0")
+	.panel-heading
 		.row
-			.col-md-10.text-center
+			.col-md-5.text-center
 				h4
 					strong {{type}} PROJECTS
+			.col-md-5
+				h4(style="font-variant:small-caps;")
+					| Total Revenue&nbsp;&nbsp;
+					| {{total1|number:0}}
 			.col-md-2
 				button.btn.btn-success.btn-default(ng-click="timeline()")
 					span.glyphicon.glyphicon-time
@@ -27,11 +31,11 @@
 					abbr(title="Start Of Production Date") SOP
 				th.clickable(ng-click="predicate='winprobability';reverse=!reverse")
 					abbr(title="Win Probability") WP
-				th Status
+				th.clickable(ng-click="predicate='late_status';reverse=!reverse") Status
 				th Details
 		tbody
 			tr(ng-repeat="project in projects| orderBy: predicate: reverse")
-				td {{$index + 1}}
+				td(ng-init="total(''+project.tot_revenue)") {{$index + 1}}
 				td 
 					abbr(title="{{project.title}}") {{project.title.substring(0,20)}}
 				td(style="width:154;") {{project.customer.name}}
@@ -39,7 +43,7 @@
 					a.clickable(tooltip="{{project.year_revenue| indno}}",style="color:black;") {{project.year_revenue/100000| number:2}}
 				td.text-right(style="width:124;")
 					a.clickable(tooltip="{{project.tot_revenue| indno}}",style="color:black;") {{project.tot_revenue/100000| number:2}}
-				td.text-center(ng-init="sum(project.year_revenue,project.tot_revenue)") {{project.sopDate | date: 'dd MMM,yyyy'}}
+				td.text-center {{project.sopDate | date: 'dd MMM,yyyy'}}
 				td {{project.winprobability}}
 				td
 					span.glyphicon.glyphicon-circle(class="blob-{{project.late_status}}")
@@ -60,19 +64,15 @@
 								button.btn.btn-success(ng-click="task(''+project.id,''+project.title,''+project.late_status)",ng-hide="hide")
 									a.clickable(tooltip="Tasks",style="color:white;")
 										span.glyphicon.glyphicon-dashboard
-							li
-								button.btn.btn-success(ng-click="opc(''+project.id,''+project.title)")
-									a.clickable(tooltip="Opportunity Progress Checklist",style="color:white;")
-										span.glyphicon.glyphicon-check
 		tfoot
 			tr.info
 				td
 				td
 				td
 				td.text-right
-					strong {{total2| indno}}
+					strong {{total1/5| number:0}}
 				td.text-right
-					strong {{total1| indno}}
+					strong {{total1| number:0}}
 				td
 				td
 				td

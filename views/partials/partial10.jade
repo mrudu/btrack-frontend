@@ -1,6 +1,8 @@
 // Pie chart modal
 .modal-header
-	.modal-title
+	.modal-title(ng-show="title")
 		h3 {{title}} PROJECTS
+	.modal-title(ng-hide="title")
+		h3 Revenue Pie Chart - Category-wise
 .modal-body
 	canvas(tc-chartjs-pie,chart-data="data",chart-options="opt",width="1008",height="400")

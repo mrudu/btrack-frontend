@@ -17,25 +17,27 @@ function AppCtrl($scope, $http) {
 }
 
 /* Controller for Summary Page */
-function SummaryCtrl($scope, $http){
+function SummaryCtrl($scope, $http,$modal){
 	$http({method: 'GET', url:'/api/dashboard'}).
 	success(function(data, status, headers, config){
 		$scope.dash = data.body;
 	});
+	$scope.piechart = function(){
+		modal('10','CategoryPieChartModalCtrl','blah','Revenue',$modal,'timelinemodal');
+	}
 }
 
 /* Controller for Reports and Dashboard pages */
 function DashboardCtrl($scope, $routeParams,$http, $modal){
-	$scope.total1 = 0; $scope.total2 = 0;
-	$scope.sum = function(year,tot){
-		$scope.total1 += tot;
-		$scope.total2 += year;
+	$scope.total1 = 0;
+	$scope.total = function(tot){
+		$scope.total1 += tot/100000;
 	}
 	var switchData = switch1($routeParams.project);
 	$scope.hide = switchData.hide;
 	$scope.message = switchData.message;
 	$scope.type = switchData.type;
-	$http({method:'POST',url:'/api/filter/project/', data:{'btn':switchData.btn}})
+	var httpcall = $http({method:'POST',url:'/api/filter/project/', data:{'btn':switchData.btn}})
 	.success(function(data, status, headers, config){
 		$scope.projects = data.body.objects
 	});
@@ -54,9 +56,6 @@ function DashboardCtrl($scope, $routeParams,$http, $modal){
 	}
 	$scope.edit = function(projectd,ptitle){
 		modal('6','editctrl',projectd,ptitle,$modal,'modalclass');
-	}
-	$scope.opc = function(projectd,ptitle){
-		modal('8','OPCctrl',projectd,ptitle,$modal,'');
 	}
 	$scope.task = function(projectd,ptitle,pstatus){
 		modal('4','taskCtrl',projectd,{'title':ptitle,'status':pstatus},$modal,'modalclass');

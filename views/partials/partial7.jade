@@ -1,13 +1,21 @@
 // BDR Summary
 .page-header
 	.row
-		.col-md-6 
+		.col-md-3 
 			h1(style="font-variant:small-caps;") 
-				small Active Projects&nbsp;&nbsp;
-				| {{dash.active}}
-		.col-md-6 
+				small Total&nbsp;&nbsp;
+				| {{dash.active+dash.completed+dash.suspended}}
+		.col-md-3 
+			h1(style="font-variant:small-caps;") 
+				small Completed&nbsp;&nbsp;
+				| {{dash.completed}}
+		.col-md-3 
 			h1(style="font-variant:small-caps;")
-				small Suspended Projects&nbsp;&nbsp;
+				small Active&nbsp;&nbsp;
+				| {{dash.active}}
+		.col-md-3 
+			h1(style="font-variant:small-caps;")
+				small Suspended&nbsp;&nbsp;
 				| {{dash.suspended}}
 .row
 	.col-md-6
@@ -22,32 +30,48 @@
 				tbody
 					tr
 						td Total No of Projects
-						td {{dash.active+dash.suspended}}
+						td {{dash.active+dash.suspended+dash.completed}}
 					tr
-						td Enquiries
-						td {{dash.enq}}
+						td 
+							a(href="report/enq") Enquiry Stage
+						td 
+							a(href="report/enq") {{dash.enq-dash.enq}}
 					tr
-						td NBOs Submitted
-						td {{dash.nbo}}
+						td 
+							a(href="report/nbo") NBO Stage
+						td 
+							a(href="report/nbo") {{dash.nbo-dash.quo}}
 					tr
-						td Quotations Submitted
-						td {{dash.quo}}
+						td 
+							a(href="report/quote") Quotation Stage
+						td 
+							a(href="report/quote") {{dash.quo-dash.ipo}}
 					tr
-						td Initial POs Received
-						td {{dash.ipo}}
+						td 
+							a(href="report/ipo") Waiting for Initial PO
+						td 
+							a(href="report/ipo") {{dash.ipo-dash.ppap}}
 					tr
-						td PPAP submitted
-						td {{dash.ppap}}
+						td 
+							a(href="report/ppap") PPAP stage
+						td 
+							a(href="report/ppap") {{dash.ppap-dash.fpo}}
 					tr
-						td Final POs Received
-						td {{dash.fpo}}
+						td 
+							a(href="report/fpo") Waiting for Final PO
+						td 
+							a(href="report/fpo") {{dash.fpo-dash.frs}}
 					tr
-						td First Revenue Shipments
-						td {{dash.frs}}
+						td 
+							a(href="report/frs") First Revenue Shipments
+						td 
+							a(href="report/frs") {{dash.frs}}
 	.col-md-6
 		.panel.panel-default
 			.panel-heading
-				| Strategic Growth Opportunity
+				| Strategic Growth Opportunity&nbsp;&nbsp;
+				button.btn.btn-info.btn-default(ng-click="piechart()")
+					i.fa.fa-adjust.fa-lg
 			table.table.table-hover
 				thead
 					tr

@@ -3,7 +3,13 @@
 	width: 28px;
 	height: 28px;
 	border-radius: 14px;
-	left: 9px;
+	left: -9px;
+}
+.small .modal-footer{
+	margin:0px;
+}
+.blob-4{
+	background-color:black;
 }
 .blob-0{
 	background-color:rgb(66,201,41);
@@ -16,6 +22,9 @@
 }
 .blob-3{
 	background-color:rgb(252,49,90);
+}
+.progress-bar[aria-valuenow="0"], .progress-bar[aria-valuenow="1"], .progress-bar[aria-valuenow="2"]{
+	min-width:0px;
 }
 .timeline .progress{
 	background-color:white;
@@ -31,10 +40,10 @@
 .progress-bar-QUOTE{
 	background-color:rgb(16, 204, 0);
 }
-.progress-bar-PPAPSUB{
+.progress-bar-IPO{
 	background-color: rgb(92,0,225);
 }
-.progress-bar-PPAPAPP{
+.progress-bar-PPAP{
 	background-color:#A2299D;
 }
 .progress-bar-FRS{

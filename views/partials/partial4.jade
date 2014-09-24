@@ -8,10 +8,10 @@
 				span.glyphicon.glyphicon-circle(class="blob-{{status}}",style="top:20px;")
 		.row.timeline(style="height:22px;")
 			.col-md-12
-				progress(max="100")
-					bar(ng-repeat="x in time.current",value="x.value/time.max*100",type="{{x.type}}")
+				progress(max="112")
+					bar(ng-repeat="x in time.current",value="x.value/time.max*100",type="{{x.type}}",class="{{x.inc}}")
 						a.clickable(style="color:white",tooltip="{{x.text}}")
-							strong {{x.value-1}}
+							strong {{x.value| number:0}}
 .modal-body
 	table.table.table-hover
 		thead
