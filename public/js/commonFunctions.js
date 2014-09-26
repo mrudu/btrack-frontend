@@ -34,8 +34,8 @@ function time(obj){
 			end_date = today;
 			currobj.inc = "progress-striped active";
 		}
-		max += daysbetween(start_date,end_date)/7.0;
-		currobj.value = daysbetween(start_date,end_date)/7.0;
+		currobj.value = Math.abs(daysbetween(start_date,end_date)/7.0);
+		max += currobj.value;
 		due_date = new Date(task.due_date);
 		switch(task.workflow.id){
 			case 1:
@@ -63,7 +63,7 @@ function time(obj){
 		currobj.text = currobj.type;
 		current.push(currobj);
 	});
-	return {'max':max,'current':current,'count':0};
+	return {'max':max,'current':current};
 }
 
 function modal(temp, ctrl, projectd,ptitle, $modal,wclass){
@@ -86,37 +86,37 @@ function switch1(url){
 	var postData = {'type':'','message':'','btn':'','hide':false}
 	switch(url){
 		case "nbo":
-			postData.btn = "?tasks__workflow__id=2&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=2&tasks__end_date__isnull=True";
 			postData.type= "NBO STAGE";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
 		case "quote":
-			postData.btn = "?tasks__workflow__id=3&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=3&tasks__end_date__isnull=True";
 			postData.type= "QUOTE STAGE";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
 		case "ipo":
-			postData.btn = "?tasks__workflow__id=4&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=4&tasks__end_date__isnull=True";
 			postData.type= "INITIAL PURCHASE ORDER STAGE";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
 		case "ppap":
-			postData.btn = "?tasks__workflow__id=5&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=5&tasks__end_date__isnull=True";
 			postData.type= "PPAP STAGE";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
 		case "fpo":
-			postData.btn = "?tasks__workflow__id=6&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=6&tasks__end_date__isnull=True";
 			postData.type= "FINAL PURCHASE ORDER";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
 		case "frs":
-			postData.btn = "?tasks__workflow__id=7&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=7";
 			postData.type= "FRS STAGE";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
 		case "enq":
-			postData.btn = "?tasks__workflow__id=1&tasks__end_date__isnull=True&status=0";
+			postData.btn = "?tasks__workflow__id=1&tasks__end_date__isnull=True";
 			postData.type= "ENQUIRY STAGE";
 			postData.message = "Projects in "+postData.type+" stage";
 			break;
@@ -210,7 +210,7 @@ function switch1(url){
 			break;
 		case "lagging":
 			postData.type = "LAGGING";
-			postData.btn = "?status__lte=1&sopDate__lte="+today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			postData.btn = "?status=0&sopDate__lte="+today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 			postData.message = "Projects whose Start Of Production date has gone by and Production not yet started";
 			break;
 	}

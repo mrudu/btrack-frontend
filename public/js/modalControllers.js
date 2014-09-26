@@ -4,17 +4,24 @@
 /* Controller for Timeline Modal. Argument projectId consists of the list of projects. */
 function TimelineModalCtrl($scope, $modalInstance, projectId, protitle, $modal){
 	$scope.title = protitle;
+	$scope.reverse = true;
+	$scope.predicate = "";
 	$scope.timeline = {};
 	$scope.max_max = 0;
 	var foreachcall = projectId.forEach(function(obj){
 		var x = time(obj);
-		$scope.timeline[obj.title] = {'title':obj.title,'values':x.current, 'maxv':x.max-x.count,'id':obj.id,'status':obj.late_status,'customer':obj.customer.name}
+		$scope.timeline[obj.title] = {'title':obj.title,'values':x.current, 'maxv':x.max,'id':obj.id,'status':obj.late_status,'customer':obj.customer.name}
 		if($scope.max_max < x.max){
 			$scope.max_max = x.max+5;
 		}
 	});
 	$scope.task = function(projectd,ptitle,pstatus){
 		modal('4','taskCtrl',projectd,{'title':ptitle,'status':pstatus},$modal,'small');
+	}
+	$scope.order = function(pr){
+		console.log(pr);
+		$scope.predicate = pr;
+		$scope.reverse != $scope.reverse;
 	}
 }
 function BarChartModalCtrl($scope,$modalInstance,projectId,protitle){
