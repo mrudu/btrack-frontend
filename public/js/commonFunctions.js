@@ -25,6 +25,7 @@ function time(obj){
 	var start_date = Date();
 	var end_date = Date();
 	var due_date = Date();
+	var last = {};
 	var x = obj.tasks.forEach(function(task){
 		var currobj ={'value':0,'type':'success','text':'','inc':''};
 		start_date = new Date(task.start_date);
@@ -61,8 +62,13 @@ function time(obj){
 				break;
 		}
 		currobj.text = currobj.type;
-		current.push(currobj);
+		if(task.end_date){
+			current.push(currobj);
+		} else {
+			last = currobj;
+		}
 	});
+	current.push(last);
 	return {'max':max,'current':current};
 }
 
@@ -174,38 +180,38 @@ function switch1(url){
 			break;
 		case "oth":
 			postData.type= "MISCELLANOUS CATEGORY";
-			postData.btn = "?product=Oth&status=0";
+			postData.btn = "?product=Oth";
 			postData.message = "Projects in Miscellaneous product category";
 			break;
 		case "wtc":
 			postData.type= "WORLD TRANSFER CASE";
-			postData.btn = "?product=WTC&status=0";
+			postData.btn = "?product=WTC";
 			postData.message = "World Transfer Case Projects";
 			break;
 		case "ace":
 			postData.type= "ACE";
-			postData.btn = "?product=ACE&status=0";
+			postData.btn = "?product=ACE";
 			postData.message = "Projects in ACE category";
 			break;
 
 		case "ntc":
 			postData.type= "TRANSFER CASE";
-			postData.btn = "?product=NTC&status=0";
+			postData.btn = "?product=NTC";
 			postData.message = "Projects in Transfer Case product category";
 			break;
 		case "synchro":
 			postData.type= "SYNCHRONIZER";
-			postData.btn = "?product=Synchro&status=0";
+			postData.btn = "?product=Synchro";
 			postData.message = "Projects in Synchronizer product category";
 			break;
 		case "ptu":
 			postData.type= "POWER TRANSFER UNIT";
-			postData.btn = "?product=PTU&status=0";
+			postData.btn = "?product=PTU";
 			postData.message = "Projects in Power Transfer Unit product category";
 			break;
 		case "comp":
 			postData.type= "COMPONENTS";
-			postData.btn = "?product=Comp&status=0";
+			postData.btn = "?product=Comp";
 			postData.message = "Projects in Component product category";
 			break;
 		case "lagging":
@@ -216,5 +222,6 @@ function switch1(url){
 	}
 	if(postData.type != "TOP TEN"){
 	postData.btn += "&limit=100"}
+	console.log(postData);
 	return postData;
 }

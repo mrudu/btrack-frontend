@@ -4,8 +4,7 @@
 /* Controller for Timeline Modal. Argument projectId consists of the list of projects. */
 function TimelineModalCtrl($scope, $modalInstance, projectId, protitle, $modal){
 	$scope.title = protitle;
-	$scope.reverse = true;
-	$scope.predicate = "";
+	$scope.predicate = 'maxv';
 	$scope.timeline = {};
 	$scope.max_max = 0;
 	var foreachcall = projectId.forEach(function(obj){
@@ -33,31 +32,60 @@ function BarChartModalCtrl($scope,$modalInstance,projectId,protitle){
 		$scope.data.datasets[0].data.push(obj.tot_revenue/10000000);
 	});
 }
-function getRandomColor(){
-	var letters = '0123456789ABCDEF'.split('');
-	var color = '#';
-	for (var i = 0; i < 6; i++ ) {
-		color += letters[Math.round(Math.random() * 15)];
-	}
-	return color;
-}
 function PieChartModalCtrl($scope,$modalInstance,projectId,protitle){
 	$scope.title = protitle;
 	$scope.data = [];
-	$scope.opt = {'barDatasetSpacing':50}
+	$scope.options = {
+		chart: {
+			type: 'pieChart',
+			height: 1500,
+			x: function(d){return d.key;},
+			y: function(d){return d.y;},
+			showLabels: true,
+			showLegend: true,
+			labelType: "percent",
+			transitionDuration: 500,
+			labelThreshold: 0.01,
+			tooltips: false,
+		}
+	}
 	projectId.forEach(function(ob){
-		$scope.data.push({'value':ob.tot_revenue/100000,'color':getRandomColor(),'highlight':getRandomColor(),'label':ob.title});
+		$scope.data.push({y:ob.tot_revenue/100000,key:ob.title});
 	});
 }
 function CategoryPieChartModalCtrl($scope,$modalInstance,$http){
 	$scope.data = [];
-	$http({method:'GET',url:'/api/cpc'}).success(function(data,status,headers,config){
-		$scope.data.push({'value':data.body.ntc,'color':'#FF4D4D','highlight':'#FF9191','label':'Next Generation Transfer Cases'});
-		$scope.data.push({'value':data.body.wtc,'color':'#F8E505','highlight':'#FDF488','label':'World Transfer Cases'});
-		$scope.data.push({'value':data.body.ptu,'color':'#1FFF00','highlight':'#9BEE8F','label':'Power Transfer Units'});
-		$scope.data.push({'value':data.body.syn,'color':'#02B2B9','highlight':'#97D9DB','label':'Synchronizers'});
-		$scope.data.push({'value':data.body.com,'color':'#C900F0','highlight':'#E097EE','label':'Components'});
+	$http({method:'GET',url:'/api/cpc'})
+	.success(function(data,status,headers,config){
+		$scope.data.push({y:data.body.ntc,key:'T/c'});
+		$scope.data.push({y:data.body.wtc,key:'WTC'});
+		$scope.data.push({y:data.body.ptu,key:'PTU'});
+		$scope.data.push({y:data.body.syn,key:'Synchro'});
+		$scope.data.push({y:data.body.com,key:'Comp'});
+		$scope.$apply();
 	});
+	$scope.options = {
+		chart: {
+			type: 'pieChart',
+			height: 500,
+			x: function(d){return d.key+" "+d.y+"% ";},
+			y: function(d){return d.y;},
+			showLabels: true,
+			tooltip:true,
+			transitionDuration: 500,
+			labelThreshold: 0.01,
+			labelType: "percent",
+			tooltips: false,
+			legend: {
+				margin: {
+					top: 5,
+					right: 35,
+					bottom: 5,
+					left: 0
+				}
+			}
+		}
+	}
 }
 /* Controller for Opportunity Progress Checklist Modal. Here the argument projectId refers to the primary key value of the Project. */
 function OPCctrl($scope, $http, $modalInstance, projectId,protitle){
@@ -75,16 +103,17 @@ function OPCctrl($scope, $http, $modalInstance, projectId,protitle){
 }
 
 /* Controller for Edit Project Modal. Uses the same template as in Create Modal. */
-function editctrl($scope, $http, $modalInstance, projectId,protitle){
+function editctrl($scope, $http, $modalInstance, projectId,protitle,$modal){
 	$scope.title = protitle;
-	$scope.project = {};
+	$scope.projct = {};
 	$scope.alerts = [];
-	$http({method: 'GET', url: '/api/customer'}).
+	$http({method: 'POST', url: '/api/filter/customer',data:{"btn":"?limit=100"}}).
 	success(function(data, status, headers, config){
 		$scope.customers = data.body.objects;
-		$scope.project = projectId;
-		$scope.custom = $scope.project.customer;
-		$scope.project.life = $scope.project.life-2;
+		$scope.projct = projectId;
+		$scope.createdBy = $scope.projct.createdBy.id;
+		$scope.custom = $scope.projct.customer;
+		$scope.projct.life = $scope.projct.life-2;
 	});
 	$scope.cancel = function(){
 		$modalInstance.close();
@@ -93,27 +122,30 @@ function editctrl($scope, $http, $modalInstance, projectId,protitle){
 		var putData = {'status':number,'late_status':4}
 		$http({method:'POST',url:'/api/put/project/'+projectd+'/',data:putData})
 		.success(function(data,status,headers,config){
-			$scope.project.status = number;
+			$scope.projct.status = number;
 		});
 	}
-	$scope.ok = function(){
-		$scope.project.life = $scope.project.life+2;
-		$scope.project.createdBy = "/api/v1/user/1/";
-		$scope.project.customer = "/api/v1/customer/"+$scope.custom.id+'/';
-		console.log($scope.project.customer);
-		$http.post('/api/put/project/'+projectId.id, $scope.project)
+	$scope.ok = function(createdBy){
+		$scope.projct.life = $scope.projct.life+2;
+		$scope.projct.createdBy = "/api/v1/user/"+createdBy+"/";
+		$scope.projct.customer = "/api/v1/customer/"+$scope.custom.id+"/";
+		$http.post('/api/put/project/'+projectId.id, $scope.projct)
 		.success(function(){
 			$scope.alerts.push({type:'success', msg:'Well done! You\'ve successfully edited the project!'});
-			$scope.project.life = $scope.project.life-2;
+			$scope.projct.life = $scope.projct.life-2;
+			$scope.projct.createdBy = {'username':'F5 '}
 		})
 		.error(function(){
 			$scope.alerts.push({type:'danger', msg:'Oh snap! Something wierd happened at the server. Change a few things up and try submitting again!'});
 		});
-		console.log($scope.project.customer);
 	}
 	$scope.closeAlert = function(index){
 		$scope.alerts.splice(index,1);
 	}
+	$scope.open = function(){
+		modal('5','CreateCustomerCtrl',0,"",$modal,'');
+	}
+
 }
 
 function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
@@ -121,6 +153,7 @@ function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
 	$scope.title = protitle.title;
 	$scope.status = protitle.status;
 	$scope.postTask = {};
+	$scope.task = {'remarks':''};
 	var postData = {'btn':'?project__id='+projectId}
 	$http({method:'POST',url:'/api/filter/task/', data:postData })
 	.success(function(data, status, headers, config){
@@ -144,6 +177,12 @@ function taskCtrl($scope, $http, $modalInstance, projectId,protitle){
 			$scope.tasks.push({'due_date':$scope.postTask.due_date,'remarks':$scope.postTask.remarks,'description':$scope.postTask.description,'start_date':today});
 			$scope.postTask = {};
 		});
+	}
+	$scope.edit = function(task,txt){
+		$scope.task.remarks = txt;
+		$http.post('/api/patch/task/'+task+'/', $scope.task)
+		.success(function(){
+		})
 	}
 }
 function remarkCtrl($scope, $http, $modalInstance, projectId,protitle){

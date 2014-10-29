@@ -23,4 +23,19 @@ filter('indno', function(){
 		var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
 		return res
 	};
+}).filter('object2Array',function(){
+	return function(input) {
+		var out = [];
+		if(input instanceof Array) {
+			for(var i = 0; i < input.length; i++){
+				out.push(input[i]);
+			}
+		}
+		else if (input instanceof Object){
+			for(var i in input){
+				out.push(input[i]);
+			}
+		}
+		return out;
+	}
 });

@@ -1,4 +1,10 @@
-// Dashboard Partial
+// Project Details Partial
+.row
+	.col-md-12
+		alert.text-center(type="warning",ng-hide="alert",close="alert=true;",style="font-size:14px;font-weight:800;font-family:'Courier New',Helvetica,Arial,sans-serif;") {{message}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			span.glyphicon.glyphicon-question-sign(style="font-size:25px;top:6px;")
+
+
 .panel.panel-success.projects
 	.panel-heading
 		.row
@@ -7,14 +13,14 @@
 					strong {{type}} PROJECTS
 			.col-md-5
 				h4(style="font-variant:small-caps;")
-					| Total Revenue&nbsp;&nbsp;
-					| {{total1|number:0}}
+					| Total Revenue &nbsp;&nbsp;
+					| {{total1|number:2}}
+
+				h4(style="font-variant:small-caps;")
+					| in lakhs
 			.col-md-2
 				button.btn.btn-success.btn-default(ng-click="timeline()")
 					span.glyphicon.glyphicon-time
-				&nbsp;&nbsp;
-				button.btn.btn-warning.btn-default(ng-click="barchart()")
-					span.glyphicon.glyphicon-stats
 				&nbsp;&nbsp;
 				button.btn.btn-info.btn-default(ng-click="piechart()")
 					i.fa.fa-adjust.fa-lg
@@ -25,6 +31,7 @@
 				th #
 				th.clickable(ng-click="predicate='title';reverse=!reverse") Project Title
 				th.clickable(ng-click="predicate='customer.name';reverse=!reverse",style="width:154px;") Customer
+				th.clickable(ng-click="predicate='product';reverse=!reverse",style="width:154px;") Category
 				th.text-right.clickable(ng-click="predicate='year_revenue';reverse=!reverse",style="width:124px;") Revenue per year (in lakhs)
 				th.text-right.clickable(ng-click="predicate='tot_revenue';reverse=!reverse",style="width:124px;") Total Revenue (in lakhs)
 				th.text-center.clickable(ng-click="predicate='sopDate';reverse=!reverse")
@@ -32,28 +39,32 @@
 				th.clickable(ng-click="predicate='winprobability';reverse=!reverse")
 					abbr(title="Win Probability") WP
 				th.clickable(ng-click="predicate='late_status';reverse=!reverse") Status
+				th.clickable(ng-click="predicate='createdBy.id';reverse=!reverse") Incharge
 				th Details
 		tbody
 			tr(ng-repeat="project in projects| orderBy: predicate: reverse")
 				td(ng-init="total(''+project.tot_revenue)") {{$index + 1}}
 				td 
 					abbr(title="{{project.title}}") {{project.title.substring(0,20)}}
-				td(style="width:154;") {{project.customer.name}}
-				td.text-right(style="width:124;")
+				td(style="width:150;") {{project.customer.name}}
+				td(style="width:80;") {{project.product}}
+				td.text-right(style="width:100;")
 					a.clickable(tooltip="{{project.year_revenue| indno}}",style="color:black;") {{project.year_revenue/100000| number:2}}
-				td.text-right(style="width:124;")
+				td.text-right(style="width:100;")
 					a.clickable(tooltip="{{project.tot_revenue| indno}}",style="color:black;") {{project.tot_revenue/100000| number:2}}
-				td.text-center {{project.sopDate | date: 'dd MMM,yyyy'}}
+				td.text-center {{project.sopDate | date: 'dd/MM/yy'}}
 				td {{project.winprobability}}
 				td
-					span.glyphicon.glyphicon-circle(class="blob-{{project.late_status}}")
+					span.text-center.glyphicon.glyphicon-circle(class="blob-{{project.late_status}}",style="padding-top:4px;")
+						{{project.generated}}
+				td {{project.createdBy.username.substring(0,3)}}
 				td
 					.btn-group(dropdown, is-open="openb",ng-init="openb=false;")
 						button.btn.btn-primary.btn-sm.dropdown-toggle
 							span.glyphicon.glyphicon-chevron-down
 						ul.dropdown-menu(role="menu")
 							li
-								button.btn.btn-success(ng-click="open(''+project.id,project.title+'')")
+								button.btn.btn-success(ng-click="open(''+project.id,project.customer.name+' - '+project.title+'')")
 									a.clickable(tooltip="Remarks",style="color:white;")
 										span.glyphicon.glyphicon-comment
 							li
@@ -61,7 +72,7 @@
 									a.clickable(tooltip="Edit Project",style="color:white;")
 										span.glyphicon.glyphicon-edit
 							li
-								button.btn.btn-success(ng-click="task(''+project.id,''+project.title,''+project.late_status)",ng-hide="hide")
+								button.btn.btn-success(ng-click="task(''+project.id,project.customer.name+' - '+project.title+' : '+project.createdBy.username,''+project.late_status)",ng-hide="hide")
 									a.clickable(tooltip="Tasks",style="color:white;")
 										span.glyphicon.glyphicon-dashboard
 		tfoot
@@ -69,17 +80,14 @@
 				td
 				td
 				td
+				td
 				td.text-right
-					strong {{total1/5| number:0}}
+					strong {{total1/5| number:2}}
 				td.text-right
-					strong {{total1| number:0}}
+					strong {{total1| number:2}}
 				td
 				td
 				td
 				td
-.row
-	.col-md-6.col-md-offset-6
-		alert.text-center(type="warning",ng-hide="alert",close="alert=true;",style="font-size:14px;font-weight:800;font-family:'Courier New',Helvetica,Arial,sans-serif;") {{message}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			span.glyphicon.glyphicon-question-sign(style="font-size:25px;top:6px;")
-
+				td
 

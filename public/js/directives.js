@@ -1,8 +1,35 @@
 'use strict';
 
 /* Directives */
-
-
+function printDirective(){
+	var printSection = document.getElementById('printSection');
+	// if there is no printing section, create one
+	if(!printSection){
+		printSection = document.createElement('div');
+		printSection.id = 'printSection';
+		document.body.appendChild(printSection);
+	}
+	function link(scope, element, attrs) {
+		element.on('click', function () {
+			var elemToPrint = document.getElementById(attrs.printElementId);
+			if (elemToPrint) {
+				printElement(elemToPrint);
+			}
+		});
+		window.onafterprint = function(){
+			printsection.innerHTML = "";
+		}
+	}
+	function printElement(elem) {
+		var domClone = elem.cloneNode(true);
+		printSection.appendChild(domClone);
+		window.print();
+	}
+	return {
+		link:link,
+		restrict: 'A'
+	};
+}
 angular.module('myApp.directives', []).
   directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
@@ -22,4 +49,5 @@ angular.module('myApp.directives', []).
 			  }
 		  });
 	  }
-  });
+  }).
+  directive('ngPrint',[printDirective]);

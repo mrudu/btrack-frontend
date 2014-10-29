@@ -1,18 +1,25 @@
 // Timeline Ctrl
 .page-header.text-center
 	h3 {{title}} PROJECTS TIMELINE
-	.row(ng-init="reverse=true")
-		.col-md-3
-			strong.text-right.clickable(ng-click="order('title')") Project Title
-		.col-md-8
+	.row
+		.col-md-2
+			a
+				strong.text-left.clickable(ng-click="predicate = 'title'; reverse=!reverse;") Title
+		.col-md-2
+			a
+				strong.text-left.clickable(ng-click="predicate = 'customer'; reverse=!reverse;") Customer
+		.col-md-7
 			strong Timeline
 		.col-md-1
-			strong.text-right.clickable(ng-click="predicate='maxv';reverse=!reverse;") Weeks
-.timeline(ng-repeat="time in timeline| orderBy:'maxv':false")
+			a
+				strong.text-right.clickable(ng-click="predicate = 'maxv'; reverse=!reverse;") Weeks
+.timeline(ng-repeat="time in timeline | object2Array| orderBy:predicate:reverse")
 	.row
-		.col-md-3(ng-click="task(''+time.id,''+time.title,''+time.status)")
-			a.clickable(tooltip="{{time.customer}}",style="color:black;") {{time.title.substring(0,26)}}
-		.col-md-8(style="height:22px;")
+		.col-md-2(ng-click="task(''+time.id,''+time.title,''+time.status)")
+			a.clickable {{time.title.substring(0,26)}}
+		.col-md-2
+			{{time.customer}}
+		.col-md-7(style="height:22px;")
 			progress(max="100")
 				bar(ng-repeat="x in time.values",value="x.value*100/max_max",type="{{x.type}}",class="{{x.inc}}")
 					a.clickable(style="color:white",tooltip="{{x.text}}")

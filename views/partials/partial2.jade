@@ -1,11 +1,13 @@
 // Remarks Partial
 .modal-header
 	h3.modal-title
-		| {{title}} Remarks
+		| {{title}}
 .modal-body
 	div(ng-repeat = "remark in remarks.slice().reverse()")
-		p(ng-bind="remark.content",tooltip="{{remark.created_on| date}}", tooltip-placement="bottom")
-		hr
+		.col-md-2
+			{{remark.created_on| date}}
+		.col-md-10
+			p(ng-bind="remark.content",tooltip="{{remark.created_on| date}}", tooltip-placement="bottom")
 .modal-footer
 	.col-md-10
 			textarea.form-control(rows="3", ng-model="postRemark.content")

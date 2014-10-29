@@ -14,7 +14,7 @@ block body
 						.list-group(collapse="isCollapsed")
 							a.list-group-item.list-group-item-success(href="dashboard/all") All Projects
 							a.list-group-item.list-group-item-success(href="dashboard/compl") Completed Projects
-							a.list-group-item.list-group-item-success(href="dashboard/ong") On-Going Projects
+							a.list-group-item.list-group-item-success(href="dashboard/ong") Active Projects
 							a.list-group-item.list-group-item-success(href="dashboard/fp") Focus Projects
 							a.list-group-item.list-group-item-success(href="dashboard/h1p") Horizon 1 Projects
 							a.list-group-item.list-group-item-success(href="dashboard/h2p") Horizon 2 Projects
@@ -27,20 +27,8 @@ block body
 						.list-group(collapse="isCollapsedd")
 
 							a.list-group-item.list-group-item-success(href="report/top10") TOP 10
-							.list-group-item.list-group-item-success
-								a.clickable.list-group-item.list-group-item-success(ng-click="isCollapsed4=!isCollapsed4") CATEGORY
-								.list-group(collapse="isCollapsed4")
-									a.list-group-item.list-group-item-danger(href="report/ntc") Next Generation Transfer Cases
-									a.list-group-item.list-group-item-danger(href="report/wtc") World Transfer Cases
-									a.list-group-item.list-group-item-danger(href="report/synchro") Synchronizers
-									a.list-group-item.list-group-item-danger(href="report/ptu") Next Trac Power Transfer Units
-									a.list-group-item.list-group-item-danger(href="report/comp") Components
-									a.list-group-item.list-group-item-danger(href="report/ace") ACE
-									a.list-group-item.list-group-item-danger(href="report/oth") Others
-					li.list-group-item(ng-mouseover="isCollapsed2=false", ng-mouseleave="isCollapsed2=true").text-center
-						a.btn.btn-large.btn-block(ng-click="isCollapsed2=true") Create
-						.list-group(collapse="isCollapsed2")
-							a.list-group-item(href="create/project") Project
+							a.list-group-item.list-group-item-success(href="report/salesmanmatrix") SALESMAN MATRIX
+		a.list-group-item(href="create/project") Create
 	.row
 		.col-md-3
 			button.home-button.home(ng-click="click()")
@@ -56,8 +44,9 @@ block body
 					| DivgiWarner Pvt Ltd
 	script(src='js/lib/angular/angular.js')
 	script(src='js/lib/angular/ui-bootstrap-tpls-0.11.0.min.js')
-	script(src='js/lib/angular/Chart.js')
-	script(src='js/lib/angular/tc-angular-chartjs.js')
+	script(src='js/lib/angular/d3.js')
+	script(src='js/lib/angular/nv.d3.js')
+	script(src='js/lib/angular/angular-nvd3.js')
 	script(src='js/lib/angular/angular-route.js')
 	script(src='js/commonFunctions.js')
 	script(src='js/app.js')

@@ -5,14 +5,39 @@
 	border-radius: 14px;
 	left: -9px;
 }
+@media screen{
+	#printSection{
+		display: none;
+	}
+}
+@media print{
+	body *{
+		visibility:hidden;
+	}
+	#printSection, #printSection *{
+		visibility: visible;
+	}
+	#printSection{
+		position:absolute;
+		left:0;
+		top:0;
+	}
+}
+.nvtooltip{
+	z-index:2040;
+}
 .small .modal-footer{
 	margin:0px;
+}
+.modal-body {
+	overflow-x: overlay;
 }
 .blob-5{
 	background-color:rgb(120, 1, 158);
 }
 .blob-4{
 	background-color:black;
+	color:white;
 }
 .blob-0{
 	background-color:rgb(66,201,41);
@@ -25,6 +50,7 @@
 }
 .blob-3{
 	background-color:rgb(252,49,90);
+	color:white;
 }
 .progress-bar[aria-valuenow="0"], .progress-bar[aria-valuenow="1"], .progress-bar[aria-valuenow="2"]{
 	min-width:0px;
@@ -66,6 +92,7 @@
 	width: 80%;
 }
 body {
+	font-size: 12px;
 	position: relative;
 	left: 0px;
 }

@@ -1,7 +1,7 @@
 // BDR Summary
 .page-header
 	.row
-		.col-md-3 
+		.col-md-2 
 			h1(style="font-variant:small-caps;") 
 				small Total&nbsp;&nbsp;
 				| {{dash.active+dash.completed+dash.suspended}}
@@ -9,7 +9,7 @@
 			h1(style="font-variant:small-caps;") 
 				small Completed&nbsp;&nbsp;
 				| {{dash.completed}}
-		.col-md-3 
+		.col-md-2 
 			h1(style="font-variant:small-caps;")
 				small Active&nbsp;&nbsp;
 				| {{dash.active}}
@@ -17,6 +17,9 @@
 			h1(style="font-variant:small-caps;")
 				small Suspended&nbsp;&nbsp;
 				| {{dash.suspended}}
+		.col-md-2
+			a.btn.btn-primary(href="http://localhost:8000/download",style="position:relative;top:23px;",tooltip="Print Data")
+				span.glyphicon.glyphicon-print
 .row
 	.col-md-6
 		.panel.panel-default
@@ -33,43 +36,43 @@
 						td {{dash.active+dash.suspended+dash.completed}}
 					tr
 						td 
-							a(href="report/enq") Enquiry Stage
+							a(href="report/enq") RFQ/ENQ
 						td 
 							a(href="report/enq") {{dash.enq-dash.enq}}
 					tr
 						td 
-							a(href="report/nbo") NBO Stage
+							a(href="report/nbo") NBO
 						td 
 							a(href="report/nbo") {{dash.nbo-dash.quo}}
 					tr
 						td 
-							a(href="report/quote") Quotation Stage
+							a(href="report/quote") QUOTE
 						td 
 							a(href="report/quote") {{dash.quo-dash.ipo}}
 					tr
 						td 
-							a(href="report/ipo") Waiting for Initial PO
+							a(href="report/ipo") IPO
 						td 
 							a(href="report/ipo") {{dash.ipo-dash.ppap}}
 					tr
 						td 
-							a(href="report/ppap") PPAP stage
+							a(href="report/ppap") PPAP
 						td 
 							a(href="report/ppap") {{dash.ppap-dash.fpo}}
 					tr
 						td 
-							a(href="report/fpo") Waiting for Final PO
+							a(href="report/fpo") FPO
 						td 
 							a(href="report/fpo") {{dash.fpo-dash.frs}}
 					tr
 						td 
-							a(href="report/frs") First Revenue Shipments
+							a(href="report/frs") FRS
 						td 
 							a(href="report/frs") {{dash.frs}}
 	.col-md-6
 		.panel.panel-default
 			.panel-heading
-				| Strategic Growth Opportunity&nbsp;&nbsp;
+				| Strategic Growth Areas&nbsp;&nbsp;
 				button.btn.btn-info.btn-default(ng-click="piechart()")
 					i.fa.fa-adjust.fa-lg
 			table.table.table-hover
@@ -80,11 +83,11 @@
 				tbody
 					tr
 						td
-							a(href="report/ptu") Power Transfer Units
+							a(href="report/ptu") NexTrac/PTU
 						td {{dash.ptu}}
 					tr
 						td
-							a(href="report/synchro")  Synchronizers
+							a(href="report/synchro")  Synchronizer
 						td {{dash.syn}}
 					tr
 						td 
@@ -92,17 +95,13 @@
 						td {{dash.comp}}
 					tr
 						td 
-							a(href="report/ntc") Transfer Cases
+							a(href="report/ntc") Transfer Case
 						td {{dash.tc}}
 					tr
 						td 
-							a(href="report/wtc") World Transfer Cases
+							a(href="report/wtc") WTC
 						td {{dash.wtc}}
 					tr
 						td 
 							a(href="report/ace") ACE
 						td {{dash.ace}}
-					tr
-						td 
-							a(href="report/oth") Others
-							td {{dash.oth}}

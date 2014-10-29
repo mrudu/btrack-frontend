@@ -16,6 +16,14 @@ function AppCtrl($scope, $http) {
 	};
 }
 
+/* Controller for SalesMatrix Page */
+function SaleMatCtrl($scope, $http){
+	$http({method: 'GET', url:'/api/salesmanmatrix'}).
+	success(function(data, status, headers, config){
+		$scope.data = data.body;
+	});
+}
+
 /* Controller for Summary Page */
 function SummaryCtrl($scope, $http,$modal){
 	$http({method: 'GET', url:'/api/dashboard'}).
@@ -65,18 +73,18 @@ function DashboardCtrl($scope, $routeParams,$http, $modal){
 /* Controller for Creation of Project */
 var CreateProjectCtrl = function($scope, $http, $modal){
 	$scope.alerts = [];
-	$scope.project = {};
-	$http({method: 'GET', url: '/api/customer'}).
+	$scope.projct = {};
+	$http({method: 'POST', url: '/api/filter/customer',data:{'btn':'?limit=0'}}).
 	success(function(data, status, headers, config){
 		$scope.customers = data.body.objects;
 	});
 	/* Inserts data into the Database */
 	$scope.ok = function() {
-		$scope.project.life = $scope.project.life+2;
-		$scope.project.createdBy = "/api/v1/user/1/";
-		$scope.project.customer = "/api/v1/customer/"+$scope.custom.id+'/';
-		console.log($scope.project.customer);
-		$http.post('/api/project', $scope.project)
+		$scope.projct.life = $scope.projct.life+2;
+		$scope.projct.createdBy = "/api/v1/user/"+$scope.createdBy+"/";
+		$scope.projct.customer = "/api/v1/customer/"+$scope.custom.id+'/';
+		console.log($scope.projct.customer);
+		$http.post('/api/project', $scope.projct)
 		.success(function(){
 			$scope.alerts.push({type:'success', msg:'Well done! You\'ve successfully created a project!'});
 		})
@@ -86,7 +94,7 @@ var CreateProjectCtrl = function($scope, $http, $modal){
 	}
 	/* Clears the fields in the form. */
 	$scope.cancel = function(){
-		$scope.project = {};
+		$scope.projct = {};
 	}
 	/* Dismisses the alert */
 	$scope.closeAlert = function(index){

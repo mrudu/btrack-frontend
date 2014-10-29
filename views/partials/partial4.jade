@@ -3,7 +3,7 @@
 	.modal-title
 		.row
 			.col-md-11
-				h3 {{title}} Tasks
+				h3 {{title}} 
 			.col-md-1
 				span.glyphicon.glyphicon-circle(class="blob-{{status}}",style="top:20px;")
 		.row.timeline(style="height:22px;")
@@ -37,7 +37,17 @@
 						button.btn.btn-info.btn-sm(ng-click="complete(task.id+'',$index+'')")
 							span.glyphicon.glyphicon-ok
 				td {{task.description}}
-				td {{task.remarks}}
+				td(style="width:468px;")
+					.noedit(ng-hide="editit")
+						| {{task.remarks}}
+						button.btn.btn-sm.btn-danger.pull-right(ng-click="editit=true;")
+							span.glyphicon.glyphicon-edit
+					.form-group(ng-show="editit")
+						.input-group
+							input.form-control(ng-model="editxt",ng-init="editxt=task.remarks")
+							span.input-group-btn
+								button.btn.btn-primary(ng-click="editit=false;edit(task.id+'',editxt);task.remarks=editxt;")
+									| OK
 .modal-footer.row
 	form(role="form",name="taskform",novalidate)
 		.col-md-2
@@ -45,11 +55,11 @@
 				option(value="") --Choose Stage--
 				option(value="1") RFQ/ENQ
 				option(value="2") NBO
-				option(value="3") Quote
-				option(value="4") PO
+				option(value="3") QUOTE
+				option(value="4") IPO
 				option(value="5") PPAP
-				option(value="6") Final PO
-				option(value="7") First Revenue Shipment
+				option(value="6") FPO
+				option(value="7") FRS
 		.col-md-2(ng-init="dateshow=false;")
 			p.input-group
 				input.form-control(type="text", ng-model="postTask.due_date",required,placeholder="Due Date")
